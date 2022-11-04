@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CommitmentDBTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CommitmentDBTestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Branches" EntityType="CommitmentDBTestModel.Branch" />
+    <EntitySet Name="Decisions" EntityType="CommitmentDBTestModel.Decision" />
+    <EntitySet Name="Financings" EntityType="CommitmentDBTestModel.Financing" />
+    <EntitySet Name="GestionnaireReports" EntityType="CommitmentDBTestModel.GestionnaireReport" />
+    <EntitySet Name="LoanApplications" EntityType="CommitmentDBTestModel.LoanApplication" />
+    <EntitySet Name="Roles" EntityType="CommitmentDBTestModel.Role" />
+    <EntitySet Name="UserProfiles" EntityType="CommitmentDBTestModel.UserProfile" />
+    <AssociationSet Name="fk_UserProfile_Branches" Association="CommitmentDBTestModel.fk_UserProfile_Branches">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gestionna__userI__5AEE82B9" Association="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="GestionnaireReport" EntitySet="GestionnaireReports" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserProfile_Roles" Association="CommitmentDBTestModel.fk_UserProfile_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <EntitySet Name="AlertRequests" EntityType="CommitmentDBTestModel.AlertRequest" />
+    <AssociationSet Name="FK__AlertRequ__appli__1F98B2C1" Association="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1">
+      <End Role="LoanApplication" EntitySet="LoanApplications" />
+      <End Role="AlertRequestNew" EntitySet="AlertRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AlertRequ__userI__0A9D95DB" Association="CommitmentDBTestModel.FK__AlertRequ__userI__0A9D95DB">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="AlertRequestNew" EntitySet="AlertRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gestionna__case___1332DBDC" Association="CommitmentDBTestModel.FK__Gestionna__case___1332DBDC">
+      <End Role="AlertRequestNew" EntitySet="AlertRequests" />
+      <End Role="GestionnaireReport" EntitySet="GestionnaireReports" />
+    </AssociationSet>
+    <AssociationSet Name="fk_AlertRequestNew_Decisions" Association="CommitmentDBTestModel.fk_AlertRequestNew_Decisions">
+      <End Role="Decision" EntitySet="Decisions" />
+      <End Role="AlertRequestNew" EntitySet="AlertRequests" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserProfile_executed_by" Association="CommitmentDBTestModel.fk_UserProfile_executed_by">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="AlertRequestNew" EntitySet="AlertRequests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="bra_code" />
+    </Key>
+    <Property Name="bra_code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bra_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserProfiles" Relationship="CommitmentDBTestModel.fk_UserProfile_Branches" FromRole="Branch" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Decision">
+    <Key>
+      <PropertyRef Name="decision_id" />
+    </Key>
+    <Property Name="decision_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="decision_desc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AlertRequestNews" Relationship="CommitmentDBTestModel.fk_AlertRequestNew_Decisions" FromRole="Decision" ToRole="AlertRequestNew" />
+  </EntityType>
+  <EntityType Name="Financing">
+    <Key>
+      <PropertyRef Name="financing_id" />
+    </Key>
+    <Property Name="financing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="financing_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="financing_type_names" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="GestionnaireReport">
+    <Key>
+      <PropertyRef Name="report_id" />
+    </Key>
+    <Property Name="report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="report_file_path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="upload_date" Type="DateTime" Precision="3" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="case_id" Type="Int32" />
+    <Property Name="report_description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9" FromRole="GestionnaireReport" ToRole="UserProfile" />
+    <NavigationProperty Name="AlertRequestNew" Relationship="CommitmentDBTestModel.FK__Gestionna__case___1332DBDC" FromRole="GestionnaireReport" ToRole="AlertRequestNew" />
+  </EntityType>
+  <EntityType Name="LoanApplication">
+    <Key>
+      <PropertyRef Name="application_id" />
+    </Key>
+    <Property Name="application_id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="loan_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="loan_description" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="loan_type_desc" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="mode_payment" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="loan_amount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="loan_date" Type="DateTime" Precision="3" />
+    <Property Name="purpose" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="loan_status" Type="Boolean" />
+    <Property Name="remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="processed_by" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="customer_no" Type="Int32" />
+    <Property Name="customer_fullname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="loan_period" Type="DateTime" Precision="0" />
+    <Property Name="loan_rate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="financing_code" Type="Int32" />
+    <Property Name="CODE_AGENCE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="NUMERO_COMPTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CLE_COMPTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="INTITULE_COMPTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SECTEUR_ACTIVITE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE_ENGAGEMENT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DATE_MISE_EN_PLACE" Type="DateTime" Precision="0" />
+    <Property Name="DATE_1ERE_ECHEANCE" Type="DateTime" Precision="0" />
+    <Property Name="DATE_FIN_ECHEANCE" Type="DateTime" Precision="0" />
+    <Property Name="MONTANT_DEBLOQUE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ENCOURS_CREDIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IMPAYES_CREDIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PERIODICITE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="NBRE_ECHEANCE" Type="Double" />
+    <Property Name="GESTIONNAIRE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL_CLIENT" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="GESTIONNAIRE_EMAIL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AlertRequestNews" Relationship="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1" FromRole="LoanApplication" ToRole="AlertRequestNew" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="role_id" />
+    </Key>
+    <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="UserProfiles" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="Role" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="first_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="last_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="created_at" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="role_id" Type="Int32" />
+    <Property Name="responsable_fullname" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="responsable_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="bra_code" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="CommitmentDBTestModel.fk_UserProfile_Branches" FromRole="UserProfile" ToRole="Branch" />
+    <NavigationProperty Name="GestionnaireReports" Relationship="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9" FromRole="UserProfile" ToRole="GestionnaireReport" />
+    <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="UserProfile" ToRole="Role" />
+    <Property Name="phone_no" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AlertRequestNews" Relationship="CommitmentDBTestModel.FK__AlertRequ__userI__0A9D95DB" FromRole="UserProfile" ToRole="AlertRequestNew" />
+    <NavigationProperty Name="AlertRequestNews1" Relationship="CommitmentDBTestModel.fk_UserProfile_executed_by" FromRole="UserProfile" ToRole="AlertRequestNew" />
+  </EntityType>
+  <Association Name="fk_UserProfile_Branches">
+    <End Type="CommitmentDBTestModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="bra_code" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="bra_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gestionna__userI__5AEE82B9">
+    <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.GestionnaireReport" Role="GestionnaireReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="GestionnaireReport">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserProfile_Roles">
+    <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AlertRequest">
+    <Key>
+      <PropertyRef Name="case_id" />
+    </Key>
+    <Property Name="case_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="start_date" Type="DateTime" Precision="0" />
+    <Property Name="end_date" Type="DateTime" Precision="0" />
+    <Property Name="alert_frequence" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="alert_frequence_periodicity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="action_frequence" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="alert_action_periodicity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Boolean" />
+    <Property Name="executed_by" Type="Int32" Nullable="false" />
+    <Property Name="decisions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="decision_id" Type="Int32" Nullable="false" />
+    <Property Name="due_date_action" Type="DateTime" Precision="0" />
+    <Property Name="end_date_action" Type="DateTime" Precision="0" />
+    <Property Name="application_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="triggered_date" Type="DateTime" Precision="0" />
+    <Property Name="created_at" Type="DateTime" Precision="0" />
+    <Property Name="next_alert_date" Type="DateTime" Precision="0" />
+    <Property Name="nb_occurence" Type="Int32" />
+    <Property Name="next_action_date" Type="DateTime" Precision="0" />
+    <Property Name="nb_occurence_action" Type="Int32" />
+    <Property Name="occurence_action_duree" Type="Int32" />
+    <Property Name="occurence_alert_duree" Type="Int32" />
+    <Property Name="query_date" Type="DateTime" Precision="0" />
+    <Property Name="due_date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="LoanApplication" Relationship="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1" FromRole="AlertRequestNew" ToRole="LoanApplication" />
+    <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.FK__AlertRequ__userI__0A9D95DB" FromRole="AlertRequestNew" ToRole="UserProfile" />
+    <NavigationProperty Name="GestionnaireReports" Relationship="CommitmentDBTestModel.FK__Gestionna__case___1332DBDC" FromRole="AlertRequestNew" ToRole="GestionnaireReport" />
+    <NavigationProperty Name="Decision" Relationship="CommitmentDBTestModel.fk_AlertRequestNew_Decisions" FromRole="AlertRequestNew" ToRole="Decision" />
+    <NavigationProperty Name="UserProfile1" Relationship="CommitmentDBTestModel.fk_UserProfile_executed_by" FromRole="AlertRequestNew" ToRole="UserProfile" />
+  </EntityType>
+  <Association Name="FK__AlertRequ__appli__1F98B2C1">
+    <End Type="CommitmentDBTestModel.LoanApplication" Role="LoanApplication" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.AlertRequest" Role="AlertRequestNew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoanApplication">
+        <PropertyRef Name="application_id" />
+      </Principal>
+      <Dependent Role="AlertRequestNew">
+        <PropertyRef Name="application_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AlertRequ__userI__0A9D95DB">
+    <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.AlertRequest" Role="AlertRequestNew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="AlertRequestNew">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gestionna__case___1332DBDC">
+    <End Type="CommitmentDBTestModel.AlertRequest" Role="AlertRequestNew" Multiplicity="0..1" />
+    <End Type="CommitmentDBTestModel.GestionnaireReport" Role="GestionnaireReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AlertRequestNew">
+        <PropertyRef Name="case_id" />
+      </Principal>
+      <Dependent Role="GestionnaireReport">
+        <PropertyRef Name="case_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_AlertRequestNew_Decisions">
+    <End Type="CommitmentDBTestModel.Decision" Role="Decision" Multiplicity="1" />
+    <End Type="CommitmentDBTestModel.AlertRequest" Role="AlertRequestNew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Decision">
+        <PropertyRef Name="decision_id" />
+      </Principal>
+      <Dependent Role="AlertRequestNew">
+        <PropertyRef Name="decision_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserProfile_executed_by">
+    <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+    <End Type="CommitmentDBTestModel.AlertRequest" Role="AlertRequestNew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="AlertRequestNew">
+        <PropertyRef Name="executed_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

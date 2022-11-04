@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CommitmentDBTestModelStoreContainer" CdmEntityContainer="CommitmentDBTestEntities">
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.Branch">
+        <MappingFragment StoreEntitySet="Branches">
+          <ScalarProperty Name="bra_name" ColumnName="bra_name" />
+          <ScalarProperty Name="bra_code" ColumnName="bra_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Decisions">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.Decision">
+        <MappingFragment StoreEntitySet="Decision">
+          <ScalarProperty Name="decision_desc" ColumnName="decision_desc" />
+          <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Financings">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.Financing">
+        <MappingFragment StoreEntitySet="Financing">
+          <ScalarProperty Name="financing_type_names" ColumnName="financing_type_names" />
+          <ScalarProperty Name="financing_type" ColumnName="financing_type" />
+          <ScalarProperty Name="financing_id" ColumnName="financing_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GestionnaireReports">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.GestionnaireReport">
+        <MappingFragment StoreEntitySet="GestionnaireReport">
+          <ScalarProperty Name="report_description" ColumnName="report_description" />
+          <ScalarProperty Name="case_id" ColumnName="case_id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="upload_date" ColumnName="upload_date" />
+          <ScalarProperty Name="report_file_path" ColumnName="report_file_path" />
+          <ScalarProperty Name="report_id" ColumnName="report_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoanApplications">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.LoanApplication">
+        <MappingFragment StoreEntitySet="LoanApplication">
+          <ScalarProperty Name="GESTIONNAIRE_EMAIL" ColumnName="GESTIONNAIRE_EMAIL" />
+          <ScalarProperty Name="EMAIL_CLIENT" ColumnName="EMAIL_CLIENT" />
+          <ScalarProperty Name="GESTIONNAIRE" ColumnName="GESTIONNAIRE" />
+          <ScalarProperty Name="NBRE_ECHEANCE" ColumnName="NBRE_ECHEANCE" />
+          <ScalarProperty Name="PERIODICITE" ColumnName="PERIODICITE" />
+          <ScalarProperty Name="IMPAYES_CREDIT" ColumnName="IMPAYES_CREDIT" />
+          <ScalarProperty Name="ENCOURS_CREDIT" ColumnName="ENCOURS_CREDIT" />
+          <ScalarProperty Name="MONTANT_DEBLOQUE" ColumnName="MONTANT_DEBLOQUE" />
+          <ScalarProperty Name="DATE_FIN_ECHEANCE" ColumnName="DATE_FIN_ECHEANCE" />
+          <ScalarProperty Name="DATE_1ERE_ECHEANCE" ColumnName="DATE_1ERE_ECHEANCE" />
+          <ScalarProperty Name="DATE_MISE_EN_PLACE" ColumnName="DATE_MISE_EN_PLACE" />
+          <ScalarProperty Name="TYPE_ENGAGEMENT" ColumnName="TYPE_ENGAGEMENT" />
+          <ScalarProperty Name="SECTEUR_ACTIVITE" ColumnName="SECTEUR_ACTIVITE" />
+          <ScalarProperty Name="INTITULE_COMPTE" ColumnName="INTITULE_COMPTE" />
+          <ScalarProperty Name="CLE_COMPTE" ColumnName="CLE_COMPTE" />
+          <ScalarProperty Name="NUMERO_COMPTE" ColumnName="NUMERO_COMPTE" />
+          <ScalarProperty Name="CODE_AGENCE" ColumnName="CODE_AGENCE" />
+          <ScalarProperty Name="financing_code" ColumnName="financing_code" />
+          <ScalarProperty Name="loan_rate" ColumnName="loan_rate" />
+          <ScalarProperty Name="loan_period" ColumnName="loan_period" />
+          <ScalarProperty Name="customer_fullname" ColumnName="customer_fullname" />
+          <ScalarProperty Name="customer_no" ColumnName="customer_no" />
+          <ScalarProperty Name="processed_by" ColumnName="processed_by" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="loan_status" ColumnName="loan_status" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+          <ScalarProperty Name="loan_amount" ColumnName="loan_amount" />
+          <ScalarProperty Name="mode_payment" ColumnName="mode_payment" />
+          <ScalarProperty Name="loan_type_desc" ColumnName="loan_type_desc" />
+          <ScalarProperty Name="loan_description" ColumnName="loan_description" />
+          <ScalarProperty Name="loan_name" ColumnName="loan_name" />
+          <ScalarProperty Name="application_id" ColumnName="application_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="role_description" ColumnName="role_description" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfiles">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.UserProfile">
+        <MappingFragment StoreEntitySet="UserProfile">
+          <ScalarProperty Name="phone_no" ColumnName="phone_no" />
+          <ScalarProperty Name="bra_code" ColumnName="bra_code" />
+          <ScalarProperty Name="responsable_email" ColumnName="responsable_email" />
+          <ScalarProperty Name="responsable_fullname" ColumnName="responsable_fullname" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlertRequests">
+      <EntityTypeMapping TypeName="CommitmentDBTestModel.AlertRequest">
+        <MappingFragment StoreEntitySet="AlertRequestNew">
+          <ScalarProperty Name="due_date" ColumnName="due_date" />
+          <ScalarProperty Name="query_date" ColumnName="query_date" />
+          <ScalarProperty Name="occurence_alert_duree" ColumnName="occurence_alert_duree" />
+          <ScalarProperty Name="occurence_action_duree" ColumnName="occurence_action_duree" />
+          <ScalarProperty Name="nb_occurence_action" ColumnName="nb_occurence_action" />
+          <ScalarProperty Name="next_action_date" ColumnName="next_action_date" />
+          <ScalarProperty Name="nb_occurence" ColumnName="nb_occurence" />
+          <ScalarProperty Name="next_alert_date" ColumnName="next_alert_date" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="triggered_date" ColumnName="triggered_date" />
+          <ScalarProperty Name="application_id" ColumnName="application_id" />
+          <ScalarProperty Name="end_date_action" ColumnName="end_date_action" />
+          <ScalarProperty Name="due_date_action" ColumnName="due_date_action" />
+          <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+          <ScalarProperty Name="decisions" ColumnName="decisions" />
+          <ScalarProperty Name="executed_by" ColumnName="executed_by" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="alert_action_periodicity" ColumnName="alert_action_periodicity" />
+          <ScalarProperty Name="action_frequence" ColumnName="action_frequence" />
+          <ScalarProperty Name="alert_frequence_periodicity" ColumnName="alert_frequence_periodicity" />
+          <ScalarProperty Name="alert_frequence" ColumnName="alert_frequence" />
+          <ScalarProperty Name="end_date" ColumnName="end_date" />
+          <ScalarProperty Name="start_date" ColumnName="start_date" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="case_id" ColumnName="case_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

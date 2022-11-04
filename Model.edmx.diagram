@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6e239cad8db4900a2050ec423949fd6" Name="Diagram1">
+        <EntityTypeShape EntityType="CommitmentDBTestModel.Branch" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.Decision" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.Financing" Width="1.5" PointX="7.75" PointY="6.875" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.GestionnaireReport" Width="1.5" PointX="8.875" PointY="3" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.LoanApplication" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.Role" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.UserProfile" Width="1.5" PointX="3" PointY="2.375" />
+        <AssociationConnector Association="CommitmentDBTestModel.fk_UserProfile_Branches" />
+        <AssociationConnector Association="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9" />
+        <AssociationConnector Association="CommitmentDBTestModel.fk_UserProfile_Roles" />
+        <EntityTypeShape EntityType="CommitmentDBTestModel.AlertRequest" Width="2.25" PointX="5.25" PointY="6.75" />
+        <AssociationConnector Association="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1" />
+        <AssociationConnector Association="CommitmentDBTestModel.FK__AlertRequ__userI__0A9D95DB" />
+        <AssociationConnector Association="CommitmentDBTestModel.FK__Gestionna__case___1332DBDC" />
+        <AssociationConnector Association="CommitmentDBTestModel.fk_AlertRequestNew_Decisions" />
+        <AssociationConnector Association="CommitmentDBTestModel.fk_UserProfile_executed_by" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
