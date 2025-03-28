@@ -56,7 +56,8 @@ namespace MailService.Models
             try
             {
                 //to = ConfigurationManager.AppSettings["to"].ToString(); //To address    
-                //to = to; //To address    
+                //to = "yanndanielmpungi@gmail.com";
+                //cc = "yanndanielmpungi@gmail.com";
                 //attachmentPath = ConfigurationManager.AppSettings["attachment"].ToString();
                 string from = ConfigurationManager.AppSettings["from"].ToString(); //From address
                 string smtp = ConfigurationManager.AppSettings["smtp"].ToString(); //smtp
@@ -69,12 +70,17 @@ namespace MailService.Models
                 //mailbody = emailBody;
                 message.Subject = subject;
                 // html true
-                message.CC.Add(cc);
+                //message.CC.Add(cc);
                 message.IsBodyHtml = true;
                 message.Body = mailbody;
                 message.BodyEncoding = Encoding.UTF8;
                 message.IsBodyHtml = true;
-                if(attachmentPath != null)
+                if (!string.IsNullOrEmpty(cc))
+                {
+                    message.CC.Add(cc);
+                }
+                //if(attachmentPath != null)
+                if (!string.IsNullOrEmpty(attachmentPath))
                 {
                     message.Attachments.Add(new Attachment(attachmentPath));
                 }
@@ -144,11 +150,14 @@ namespace MailService.Models
                     "\nGestionnaire: " + acct_officer.first_name + " " + acct_officer.last_name + "\nEmail: " + acct_officer.email +
                     "\nNom du responsable gestionnaire: " + acct_officer.responsable_fullname + "\nEmail du responsable gestionnaire: " + acct_officer.responsable_email);
 
+                // get loan type
+                
 
                 string email_body = string.Empty;
 
                 // format amount
-                string amount = FormatAmount(Decimal.Parse(loan.IMPAYES_CREDIT.ToString()));
+                //string amount = FormatAmount(Decimal.Parse((string.IsNullOrEmpty(loan.IMPAYES_CREDIT) ? "0" : loan.IMPAYES_CREDIT.ToString())));
+                string amount = FormatAmount(Decimal.Parse((string.IsNullOrEmpty(loan.MONTANT_DEBLOQUE) ? "0" : loan.loan_amount.ToString())));
                 amount = FormatAmount(Decimal.Parse(loan.MONTANT_DEBLOQUE.ToString()));
 
                 email_body = File.ReadAllText(file);

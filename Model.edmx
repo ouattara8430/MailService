@@ -70,6 +70,32 @@
           <Property Name="case_id" Type="int" />
           <Property Name="report_description" Type="varchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="Historique_Saisie">
+          <Key>
+            <PropertyRef Name="historique_saisie_id" />
+          </Key>
+          <Property Name="historique_saisie_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saisie_id" Type="int" />
+          <Property Name="amount_historique_saisie" Type="varchar" MaxLength="30" />
+          <Property Name="date_historique_saisie" Type="datetime" />
+          <Property Name="executed_by" Type="varchar" MaxLength="1" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HistoriqueProcess">
+          <Key>
+            <PropertyRef Name="historique_id" />
+          </Key>
+          <Property Name="historique_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="actions" Type="text" />
+          <Property Name="comment" Type="text" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="case_id" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="saisie_operation_header_id" Type="int" />
+        </EntityType>
         <EntityType Name="LoanApplication">
           <Key>
             <PropertyRef Name="application_id" />
@@ -108,6 +134,73 @@
           <Property Name="EMAIL_CLIENT" Type="varchar" MaxLength="250" />
           <Property Name="GESTIONNAIRE_EMAIL" Type="varchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="idmenu" />
+          </Key>
+          <Property Name="idmenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="path" Type="nvarchar" MaxLength="255" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="iconType" Type="nvarchar" MaxLength="50" />
+          <Property Name="icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="iTrue" Type="bit" />
+          <Property Name="identity" Type="int" Nullable="false" />
+          <Property Name="rupture" Type="bit" />
+          <Property Name="rang" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="operation_id" />
+          </Key>
+          <Property Name="operation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_operation_id" Type="int" />
+          <Property Name="operation_description" Type="varchar" MaxLength="200" />
+          <Property Name="account_debit" Type="varchar" MaxLength="24" />
+          <Property Name="account_credit" Type="varchar" MaxLength="24" />
+          <Property Name="amount" Type="varchar" MaxLength="30" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OtherCustomerSaisie">
+          <Key>
+            <PropertyRef Name="other_customer_saisie_id" />
+          </Key>
+          <Property Name="other_customer_saisie_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="creancier_saisissant" Type="varchar" MaxLength="200" />
+          <Property Name="debiteur_saisie" Type="varchar" MaxLength="200" />
+          <Property Name="montant_poursuivi" Type="varchar" MaxLength="50" />
+          <Property Name="numero_compte" Type="varchar" MaxLength="20" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="search_by" Type="int" />
+        </EntityType>
+        <EntityType Name="Process">
+          <Key>
+            <PropertyRef Name="processId" />
+          </Key>
+          <Property Name="processId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="isCompleted" Type="int" />
+          <Property Name="initiated_by" Type="int" />
+          <Property Name="decision_id" Type="int" />
+          <Property Name="next_user_status" Type="int" />
+          <Property Name="case_id" Type="int" />
+          <Property Name="role_id" Type="int" />
+          <Property Name="seq_no" Type="int" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="stepId" Type="int" />
+          <Property Name="reject_comment" Type="text" />
+          <Property Name="approve_comment" Type="text" />
+        </EntityType>
+        <EntityType Name="role_submenu">
+          <Key>
+            <PropertyRef Name="idrole_menu" />
+          </Key>
+          <Property Name="idrole_menu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idroles" Type="int" Nullable="false" />
+          <Property Name="idsubmenu" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="role_id" />
@@ -115,6 +208,101 @@
           <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role_description" Type="varchar" MaxLength="100" />
           <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Saisie">
+          <Key>
+            <PropertyRef Name="saisie_id" />
+          </Key>
+          <Property Name="saisie_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saisie_type_id" Type="int" />
+          <Property Name="amount_saisie" Type="varchar" MaxLength="30" />
+          <Property Name="account_no_saisie" Type="varchar" MaxLength="24" />
+          <Property Name="status_saisie" Type="int" />
+          <Property Name="amount_found" Type="varchar" MaxLength="30" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SaisieOperation">
+          <Key>
+            <PropertyRef Name="saisie_operation_id" />
+          </Key>
+          <Property Name="saisie_operation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="branch_code" Type="varchar" MaxLength="5" />
+          <Property Name="account_no" Type="varchar" MaxLength="50" />
+          <Property Name="account_name" Type="varchar" MaxLength="250" />
+          <Property Name="operation_description" Type="varchar" MaxLength="200" />
+          <Property Name="amount_debit" Type="varchar" MaxLength="20" />
+          <Property Name="amount_credit" Type="varchar" MaxLength="20" />
+          <Property Name="saisie_type_id" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="saisie_operation_header_id" Type="int" />
+        </EntityType>
+        <EntityType Name="SaisieOperationHeader">
+          <Key>
+            <PropertyRef Name="saisie_operation_header_id" />
+          </Key>
+          <Property Name="saisie_operation_header_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_no" Type="varchar" MaxLength="50" />
+          <Property Name="account_name" Type="varchar" MaxLength="250" />
+          <Property Name="date_saisie" Type="datetime" />
+          <Property Name="statut" Type="int" />
+          <Property Name="amount" Type="varchar" MaxLength="20" />
+          <Property Name="saved_by" Type="int" />
+          <Property Name="document_name" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="SaisieType">
+          <Key>
+            <PropertyRef Name="saisie_type_id" />
+          </Key>
+          <Property Name="saisie_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saisie_label" Type="varchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="step_id" />
+          </Key>
+          <Property Name="step_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="step_label" Type="varchar" MaxLength="80" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="step_no" Type="int" />
+          <Property Name="role_id" Type="int" />
+          <Property Name="isActive" Type="int" />
+        </EntityType>
+        <EntityType Name="submenu">
+          <Key>
+            <PropertyRef Name="idsubmenu" />
+          </Key>
+          <Property Name="idsubmenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="path" Type="nvarchar" MaxLength="255" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="iconType" Type="nvarchar" MaxLength="50" />
+          <Property Name="icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="identity" Type="int" Nullable="false" />
+          <Property Name="rupture" Type="bit" />
+          <Property Name="idmenu" Type="int" Nullable="false" />
+          <Property Name="rang" Type="int" Nullable="false" />
+          <Property Name="iTrue" Type="bit" />
+          <Property Name="ismenu" Type="bit" />
+        </EntityType>
+        <EntityType Name="TblCandidate">
+          <Key>
+            <PropertyRef Name="candidate_id" />
+          </Key>
+          <Property Name="candidate_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="candidate_fullname" Type="varchar" MaxLength="250" />
+          <Property Name="candidate_position" Type="varchar" MaxLength="100" />
+          <Property Name="candidate_code" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TypeOperation">
+          <Key>
+            <PropertyRef Name="type_operation_id" />
+          </Key>
+          <Property Name="type_operation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="operation_label" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -133,16 +321,41 @@
           <Property Name="responsable_email" Type="varchar" MaxLength="100" />
           <Property Name="bra_code" Type="int" />
           <Property Name="phone_no" Type="varchar" MaxLength="13" />
+          <Property Name="LastLoginDate" Type="datetime" />
         </EntityType>
-        <Association Name="FK__AlertRequ__appli__1F98B2C1">
-          <End Role="LoanApplication" Type="Self.LoanApplication" Multiplicity="0..1" />
-          <End Role="AlertRequestNew" Type="Self.AlertRequestNew" Multiplicity="*" />
+        <EntityType Name="UserVoteTblCandidate">
+          <Key>
+            <PropertyRef Name="vote_id" />
+          </Key>
+          <Property Name="vote_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="candidate_id" Type="int" />
+          <Property Name="userid" Type="int" />
+          <Property Name="matricule" Type="varchar" MaxLength="10" />
+          <Property Name="vote_status" Type="varchar" MaxLength="2" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Workflow">
+          <Key>
+            <PropertyRef Name="case_id" />
+          </Key>
+          <Property Name="case_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saisie_operation_header_id" Type="int" />
+          <Property Name="initiated_by" Type="int" />
+          <Property Name="status" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <Association Name="constraint_fk_saisie_operation_header_id">
+          <End Role="SaisieOperationHeader" Type="Self.SaisieOperationHeader" Multiplicity="0..1" />
+          <End Role="SaisieOperation" Type="Self.SaisieOperation" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LoanApplication">
-              <PropertyRef Name="application_id" />
+            <Principal Role="SaisieOperationHeader">
+              <PropertyRef Name="saisie_operation_header_id" />
             </Principal>
-            <Dependent Role="AlertRequestNew">
-              <PropertyRef Name="application_id" />
+            <Dependent Role="SaisieOperation">
+              <PropertyRef Name="saisie_operation_header_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -182,6 +395,204 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Historiqu__case___664B26CC">
+          <End Role="Workflow" Type="Self.Workflow" Multiplicity="0..1" />
+          <End Role="HistoriqueProcess" Type="Self.HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="case_id" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="case_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historiqu__saisi__34B3CB38">
+          <End Role="Saisie" Type="Self.Saisie" Multiplicity="0..1" />
+          <End Role="Historique_Saisie" Type="Self.Historique_Saisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saisie">
+              <PropertyRef Name="saisie_id" />
+            </Principal>
+            <Dependent Role="Historique_Saisie">
+              <PropertyRef Name="saisie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historiqu__userI__673F4B05">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="HistoriqueProcess" Type="Self.HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operation__type___39788055">
+          <End Role="TypeOperation" Type="Self.TypeOperation" Multiplicity="0..1" />
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOperation">
+              <PropertyRef Name="type_operation_id" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="type_operation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherCust__searc__1E8F7FEF">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="OtherCustomerSaisie" Type="Self.OtherCustomerSaisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="OtherCustomerSaisie">
+              <PropertyRef Name="search_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__case_id__5EAA0504">
+          <End Role="Workflow" Type="Self.Workflow" Multiplicity="0..1" />
+          <End Role="Process" Type="Self.Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="case_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="case_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__initiat__5CC1BC92">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="Process" Type="Self.Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="initiated_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__role_id__5AD97420">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Process" Type="Self.Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__stepId__5BCD9859">
+          <End Role="Step" Type="Self.Step" Multiplicity="0..1" />
+          <End Role="Process" Type="Self.Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Step">
+              <PropertyRef Name="step_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="stepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__userId__5DB5E0CB">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="Process" Type="Self.Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__role_subm__idrol__71BCD978">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="role_submenu" Type="Self.role_submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="role_submenu">
+              <PropertyRef Name="idroles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__role_subm__idsub__72B0FDB1">
+          <End Role="submenu" Type="Self.submenu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="role_submenu" Type="Self.role_submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="submenu">
+              <PropertyRef Name="idsubmenu" />
+            </Principal>
+            <Dependent Role="role_submenu">
+              <PropertyRef Name="idsubmenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Saisie__saisie_t__30E33A54">
+          <End Role="SaisieType" Type="Self.SaisieType" Multiplicity="0..1" />
+          <End Role="Saisie" Type="Self.Saisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieType">
+              <PropertyRef Name="saisie_type_id" />
+            </Principal>
+            <Dependent Role="Saisie">
+              <PropertyRef Name="saisie_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SaisieOpe__saisi__52442E1F">
+          <End Role="SaisieType" Type="Self.SaisieType" Multiplicity="0..1" />
+          <End Role="SaisieOperation" Type="Self.SaisieOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieType">
+              <PropertyRef Name="saisie_type_id" />
+            </Principal>
+            <Dependent Role="SaisieOperation">
+              <PropertyRef Name="saisie_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__submenu__idmenu__6EE06CCD">
+          <End Role="menu" Type="Self.menu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="submenu" Type="Self.submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="idmenu" />
+            </Principal>
+            <Dependent Role="submenu">
+              <PropertyRef Name="idmenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AlertRequestNew_application_id">
+          <End Role="LoanApplication" Type="Self.LoanApplication" Multiplicity="0..1" />
+          <End Role="AlertRequestNew" Type="Self.AlertRequestNew" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoanApplication">
+              <PropertyRef Name="application_id" />
+            </Principal>
+            <Dependent Role="AlertRequestNew">
+              <PropertyRef Name="application_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_AlertRequestNew_Decisions">
           <End Role="Decision" Type="Self.Decision" Multiplicity="1" />
           <End Role="AlertRequestNew" Type="Self.AlertRequestNew" Multiplicity="*" />
@@ -191,6 +602,42 @@
             </Principal>
             <Dependent Role="AlertRequestNew">
               <PropertyRef Name="decision_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HistoriqueProcess_saisie_operation_header_id">
+          <End Role="SaisieOperationHeader" Type="Self.SaisieOperationHeader" Multiplicity="0..1" />
+          <End Role="HistoriqueProcess" Type="Self.HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieOperationHeader">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaisieOperationHeader_saved_by">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="SaisieOperationHeader" Type="Self.SaisieOperationHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="SaisieOperationHeader">
+              <PropertyRef Name="saved_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_step_role_id">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="role_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -230,18 +677,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="FetchMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchParticipant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="accountSaisie" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="FetchPendingWorkflow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchPendingWorkFlowUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchRejectedWorkflow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchReportByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchRoleMenus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchSaisieType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchSubMenus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchWorkflowStepStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="saisie_operation_header_id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CommitmentDBTestModelStoreContainer">
           <EntitySet Name="AlertRequestNew" EntityType="Self.AlertRequestNew" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Decision" EntityType="Self.Decision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Financing" EntityType="Self.Financing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GestionnaireReport" EntityType="Self.GestionnaireReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historique_Saisie" EntityType="Self.Historique_Saisie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoriqueProcess" EntityType="Self.HistoriqueProcess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoanApplication" EntityType="Self.LoanApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherCustomerSaisie" EntityType="Self.OtherCustomerSaisie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Process" EntityType="Self.Process" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role_submenu" EntityType="Self.role_submenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Saisie" EntityType="Self.Saisie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaisieOperation" EntityType="Self.SaisieOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaisieOperationHeader" EntityType="Self.SaisieOperationHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaisieType" EntityType="Self.SaisieType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Step" EntityType="Self.Step" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="submenu" EntityType="Self.submenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblCandidate" EntityType="Self.TblCandidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOperation" EntityType="Self.TypeOperation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__AlertRequ__appli__1F98B2C1" Association="Self.FK__AlertRequ__appli__1F98B2C1">
-            <End Role="LoanApplication" EntitySet="LoanApplication" />
-            <End Role="AlertRequestNew" EntitySet="AlertRequestNew" />
+          <EntitySet Name="UserVoteTblCandidate" EntityType="Self.UserVoteTblCandidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workflow" EntityType="Self.Workflow" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="constraint_fk_saisie_operation_header_id" Association="Self.constraint_fk_saisie_operation_header_id">
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeader" />
+            <End Role="SaisieOperation" EntitySet="SaisieOperation" />
           </AssociationSet>
           <AssociationSet Name="FK__AlertRequ__userI__0A9D95DB" Association="Self.FK__AlertRequ__userI__0A9D95DB">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -255,9 +743,85 @@
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="GestionnaireReport" EntitySet="GestionnaireReport" />
           </AssociationSet>
+          <AssociationSet Name="FK__Historiqu__case___664B26CC" Association="Self.FK__Historiqu__case___664B26CC">
+            <End Role="Workflow" EntitySet="Workflow" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historiqu__saisi__34B3CB38" Association="Self.FK__Historiqu__saisi__34B3CB38">
+            <End Role="Saisie" EntitySet="Saisie" />
+            <End Role="Historique_Saisie" EntitySet="Historique_Saisie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historiqu__userI__673F4B05" Association="Self.FK__Historiqu__userI__673F4B05">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operation__type___39788055" Association="Self.FK__Operation__type___39788055">
+            <End Role="TypeOperation" EntitySet="TypeOperation" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherCust__searc__1E8F7FEF" Association="Self.FK__OtherCust__searc__1E8F7FEF">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="OtherCustomerSaisie" EntitySet="OtherCustomerSaisie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__case_id__5EAA0504" Association="Self.FK__Process__case_id__5EAA0504">
+            <End Role="Workflow" EntitySet="Workflow" />
+            <End Role="Process" EntitySet="Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__initiat__5CC1BC92" Association="Self.FK__Process__initiat__5CC1BC92">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Process" EntitySet="Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__role_id__5AD97420" Association="Self.FK__Process__role_id__5AD97420">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Process" EntitySet="Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__stepId__5BCD9859" Association="Self.FK__Process__stepId__5BCD9859">
+            <End Role="Step" EntitySet="Step" />
+            <End Role="Process" EntitySet="Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__userId__5DB5E0CB" Association="Self.FK__Process__userId__5DB5E0CB">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Process" EntitySet="Process" />
+          </AssociationSet>
+          <AssociationSet Name="FK__role_subm__idrol__71BCD978" Association="Self.FK__role_subm__idrol__71BCD978">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="role_submenu" EntitySet="role_submenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__role_subm__idsub__72B0FDB1" Association="Self.FK__role_subm__idsub__72B0FDB1">
+            <End Role="submenu" EntitySet="submenu" />
+            <End Role="role_submenu" EntitySet="role_submenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Saisie__saisie_t__30E33A54" Association="Self.FK__Saisie__saisie_t__30E33A54">
+            <End Role="SaisieType" EntitySet="SaisieType" />
+            <End Role="Saisie" EntitySet="Saisie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SaisieOpe__saisi__52442E1F" Association="Self.FK__SaisieOpe__saisi__52442E1F">
+            <End Role="SaisieType" EntitySet="SaisieType" />
+            <End Role="SaisieOperation" EntitySet="SaisieOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__submenu__idmenu__6EE06CCD" Association="Self.FK__submenu__idmenu__6EE06CCD">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="submenu" EntitySet="submenu" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AlertRequestNew_application_id" Association="Self.fk_AlertRequestNew_application_id">
+            <End Role="LoanApplication" EntitySet="LoanApplication" />
+            <End Role="AlertRequestNew" EntitySet="AlertRequestNew" />
+          </AssociationSet>
           <AssociationSet Name="fk_AlertRequestNew_Decisions" Association="Self.fk_AlertRequestNew_Decisions">
             <End Role="Decision" EntitySet="Decision" />
             <End Role="AlertRequestNew" EntitySet="AlertRequestNew" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HistoriqueProcess_saisie_operation_header_id" Association="Self.fk_HistoriqueProcess_saisie_operation_header_id">
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeader" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcess" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaisieOperationHeader_saved_by" Association="Self.fk_SaisieOperationHeader_saved_by">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeader" />
+          </AssociationSet>
+          <AssociationSet Name="fk_step_role_id" Association="Self.fk_step_role_id">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Step" EntitySet="Step" />
           </AssociationSet>
           <AssociationSet Name="fk_UserProfile_Branches" Association="Self.fk_UserProfile_Branches">
             <End Role="Branches" EntitySet="Branches" />
@@ -282,7 +846,6 @@
           <EntitySet Name="Financings" EntityType="CommitmentDBTestModel.Financing" />
           <EntitySet Name="GestionnaireReports" EntityType="CommitmentDBTestModel.GestionnaireReport" />
           <EntitySet Name="LoanApplications" EntityType="CommitmentDBTestModel.LoanApplication" />
-          <EntitySet Name="Roles" EntityType="CommitmentDBTestModel.Role" />
           <EntitySet Name="UserProfiles" EntityType="CommitmentDBTestModel.UserProfile" />
           <AssociationSet Name="fk_UserProfile_Branches" Association="CommitmentDBTestModel.fk_UserProfile_Branches">
             <End Role="Branch" EntitySet="Branches" />
@@ -291,10 +854,6 @@
           <AssociationSet Name="FK__Gestionna__userI__5AEE82B9" Association="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="GestionnaireReport" EntitySet="GestionnaireReports" />
-          </AssociationSet>
-          <AssociationSet Name="fk_UserProfile_Roles" Association="CommitmentDBTestModel.fk_UserProfile_Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           <EntitySet Name="AlertRequests" EntityType="CommitmentDBTestModel.AlertRequest" />
           <AssociationSet Name="FK__AlertRequ__appli__1F98B2C1" Association="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1">
@@ -317,7 +876,129 @@
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="AlertRequestNew" EntitySet="AlertRequests" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="TblCandidates" EntityType="CommitmentDBTestModel.TblCandidate" />
+          <EntitySet Name="UserVoteTblCandidates" EntityType="CommitmentDBTestModel.UserVoteTblCandidate" />
+          <EntitySet Name="Historique_Saisie" EntityType="CommitmentDBTestModel.Historique_Saisie" />
+          <EntitySet Name="Operations" EntityType="CommitmentDBTestModel.Operation" />
+          <EntitySet Name="Saisies" EntityType="CommitmentDBTestModel.Saisie" />
+          <EntitySet Name="SaisieTypes" EntityType="CommitmentDBTestModel.SaisieType" />
+          <EntitySet Name="TypeOperations" EntityType="CommitmentDBTestModel.TypeOperation" />
+          <AssociationSet Name="FK__Historiqu__saisi__34B3CB38" Association="CommitmentDBTestModel.FK__Historiqu__saisi__34B3CB38">
+            <End Role="Saisie" EntitySet="Saisies" />
+            <End Role="Historique_Saisie" EntitySet="Historique_Saisie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operation__type___39788055" Association="CommitmentDBTestModel.FK__Operation__type___39788055">
+            <End Role="TypeOperation" EntitySet="TypeOperations" />
+            <End Role="Operation" EntitySet="Operations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Saisie__saisie_t__30E33A54" Association="CommitmentDBTestModel.FK__Saisie__saisie_t__30E33A54">
+            <End Role="SaisieType" EntitySet="SaisieTypes" />
+            <End Role="Saisie" EntitySet="Saisies" />
+          </AssociationSet>
+          <EntitySet Name="Steps" EntityType="CommitmentDBTestModel.Step" />
+          <EntitySet Name="Workflows" EntityType="CommitmentDBTestModel.Workflow" />
+          <EntitySet Name="Processes" EntityType="CommitmentDBTestModel.Process" />
+          <AssociationSet Name="FK__Process__stepId__5BCD9859" Association="CommitmentDBTestModel.FK__Process__stepId__5BCD9859">
+            <End Role="Step" EntitySet="Steps" />
+            <End Role="Process" EntitySet="Processes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__initiat__5CC1BC92" Association="CommitmentDBTestModel.FK__Process__initiat__5CC1BC92">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Process" EntitySet="Processes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__userId__5DB5E0CB" Association="CommitmentDBTestModel.FK__Process__userId__5DB5E0CB">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Process" EntitySet="Processes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Process__case_id__5EAA0504" Association="CommitmentDBTestModel.FK__Process__case_id__5EAA0504">
+            <End Role="Workflow" EntitySet="Workflows" />
+            <End Role="Process" EntitySet="Processes" />
+          </AssociationSet>
+          <FunctionImport Name="FetchParticipant" ReturnType="Collection(CommitmentDBTestModel.FetchParticipant_Result)">
+          <Parameter Name="accountSaisie" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="FetchPendingWorkflow" ReturnType="Collection(Int32)">
+          <Parameter Name="role_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="HistoriqueProcesses" EntityType="CommitmentDBTestModel.HistoriqueProcess" />
+          <AssociationSet Name="FK__Historiqu__case___664B26CC" Association="CommitmentDBTestModel.FK__Historiqu__case___664B26CC">
+            <End Role="Workflow" EntitySet="Workflows" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historiqu__userI__673F4B05" Association="CommitmentDBTestModel.FK__Historiqu__userI__673F4B05">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcesses" />
+          </AssociationSet>
+          <FunctionImport Name="FetchPendingWorkFlowUpdate" ReturnType="Collection(CommitmentDBTestModel.FetchPendingWorkFlowUpdate_Result)">
+          <Parameter Name="role_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="menus" EntityType="CommitmentDBTestModel.menu" />
+          <EntitySet Name="role_submenu" EntityType="CommitmentDBTestModel.role_submenu" />
+          <EntitySet Name="submenus" EntityType="CommitmentDBTestModel.submenu" />
+          <AssociationSet Name="FK__submenu__idmenu__6EE06CCD" Association="CommitmentDBTestModel.FK__submenu__idmenu__6EE06CCD">
+            <End Role="menu" EntitySet="menus" />
+            <End Role="submenu" EntitySet="submenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__role_subm__idsub__72B0FDB1" Association="CommitmentDBTestModel.FK__role_subm__idsub__72B0FDB1">
+            <End Role="submenu" EntitySet="submenus" />
+            <End Role="role_submenu" EntitySet="role_submenu" />
+          </AssociationSet>
+          <FunctionImport Name="FetchRoleMenus" ReturnType="Collection(CommitmentDBTestModel.FetchRoleMenus_Result)">
+          <Parameter Name="role_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FetchSubMenus" ReturnType="Collection(CommitmentDBTestModel.FetchSubMenus_Result)" />
+          <FunctionImport Name="FetchMenu" ReturnType="Collection(CommitmentDBTestModel.FetchMenu_Result)" />
+          <FunctionImport Name="FetchSaisieType" ReturnType="Collection(CommitmentDBTestModel.FetchSaisieType_Result)" />
+          <FunctionImport Name="FetchWorkflowStepStatus" ReturnType="Collection(CommitmentDBTestModel.FetchWorkflowStepStatus_Result)">
+          <Parameter Name="saisie_operation_header_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FetchRejectedWorkflow" ReturnType="Collection(Int32)">
+          <Parameter Name="user_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FetchReportByUser" ReturnType="Collection(CommitmentDBTestModel.FetchReportByUser_Result)">
+          <Parameter Name="user_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="SaisieOperations" EntityType="CommitmentDBTestModel.SaisieOperation" />
+          <EntitySet Name="SaisieOperationHeaders" EntityType="CommitmentDBTestModel.SaisieOperationHeader" />
+          <AssociationSet Name="fk_HistoriqueProcess_saisie_operation_header_id" Association="CommitmentDBTestModel.fk_HistoriqueProcess_saisie_operation_header_id">
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeaders" />
+            <End Role="HistoriqueProcess" EntitySet="HistoriqueProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="constraint_fk_saisie_operation_header_id" Association="CommitmentDBTestModel.constraint_fk_saisie_operation_header_id">
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeaders" />
+            <End Role="SaisieOperation" EntitySet="SaisieOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SaisieOpe__saisi__52442E1F" Association="CommitmentDBTestModel.FK__SaisieOpe__saisi__52442E1F">
+            <End Role="SaisieType" EntitySet="SaisieTypes" />
+            <End Role="SaisieOperation" EntitySet="SaisieOperations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SaisieOperationHeader_saved_by" Association="CommitmentDBTestModel.fk_SaisieOperationHeader_saved_by">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="SaisieOperationHeader" EntitySet="SaisieOperationHeaders" />
+          </AssociationSet>
+          <EntitySet Name="OtherCustomerSaisies" EntityType="CommitmentDBTestModel.OtherCustomerSaisie" />
+          <AssociationSet Name="FK__OtherCust__searc__1E8F7FEF" Association="CommitmentDBTestModel.FK__OtherCust__searc__1E8F7FEF">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="OtherCustomerSaisie" EntitySet="OtherCustomerSaisies" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="CommitmentDBTestModel.Role" />
+          <AssociationSet Name="FK__Process__role_id__5AD97420" Association="CommitmentDBTestModel.FK__Process__role_id__5AD97420">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Process" EntitySet="Processes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__role_subm__idrol__71BCD978" Association="CommitmentDBTestModel.FK__role_subm__idrol__71BCD978">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="role_submenu" EntitySet="role_submenu" />
+          </AssociationSet>
+          <AssociationSet Name="fk_step_role_id" Association="CommitmentDBTestModel.fk_step_role_id">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Step" EntitySet="Steps" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserProfile_Roles" Association="CommitmentDBTestModel.fk_UserProfile_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Branch">
           <Key>
             <PropertyRef Name="bra_code" />
@@ -396,15 +1077,6 @@
           <Property Name="GESTIONNAIRE_EMAIL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlertRequestNews" Relationship="CommitmentDBTestModel.FK__AlertRequ__appli__1F98B2C1" FromRole="LoanApplication" ToRole="AlertRequestNew" />
         </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="role_id" />
-          </Key>
-          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="isActive" Type="Boolean" />
-          <NavigationProperty Name="UserProfiles" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="Role" ToRole="UserProfile" />
-        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="userId" />
@@ -423,10 +1095,16 @@
           <Property Name="bra_code" Type="Int32" />
           <NavigationProperty Name="Branch" Relationship="CommitmentDBTestModel.fk_UserProfile_Branches" FromRole="UserProfile" ToRole="Branch" />
           <NavigationProperty Name="GestionnaireReports" Relationship="CommitmentDBTestModel.FK__Gestionna__userI__5AEE82B9" FromRole="UserProfile" ToRole="GestionnaireReport" />
-          <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="UserProfile" ToRole="Role" />
           <Property Name="phone_no" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlertRequestNews" Relationship="CommitmentDBTestModel.FK__AlertRequ__userI__0A9D95DB" FromRole="UserProfile" ToRole="AlertRequestNew" />
           <NavigationProperty Name="AlertRequestNews1" Relationship="CommitmentDBTestModel.fk_UserProfile_executed_by" FromRole="UserProfile" ToRole="AlertRequestNew" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Processes" Relationship="CommitmentDBTestModel.FK__Process__initiat__5CC1BC92" FromRole="UserProfile" ToRole="Process" />
+          <NavigationProperty Name="Processes1" Relationship="CommitmentDBTestModel.FK__Process__userId__5DB5E0CB" FromRole="UserProfile" ToRole="Process" />
+          <NavigationProperty Name="HistoriqueProcesses" Relationship="CommitmentDBTestModel.FK__Historiqu__userI__673F4B05" FromRole="UserProfile" ToRole="HistoriqueProcess" />
+          <NavigationProperty Name="SaisieOperationHeaders" Relationship="CommitmentDBTestModel.fk_SaisieOperationHeader_saved_by" FromRole="UserProfile" ToRole="SaisieOperationHeader" />
+          <NavigationProperty Name="OtherCustomerSaisies" Relationship="CommitmentDBTestModel.FK__OtherCust__searc__1E8F7FEF" FromRole="UserProfile" ToRole="OtherCustomerSaisie" />
+          <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="UserProfile" ToRole="Role" />
         </EntityType>
         <Association Name="fk_UserProfile_Branches">
           <End Type="CommitmentDBTestModel.Branch" Role="Branch" Multiplicity="0..1" />
@@ -449,18 +1127,6 @@
             </Principal>
             <Dependent Role="GestionnaireReport">
               <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_UserProfile_Roles">
-          <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="UserProfile">
-              <PropertyRef Name="role_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -559,7 +1225,579 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="TblCandidate">
+          <Key>
+            <PropertyRef Name="candidate_id" />
+          </Key>
+          <Property Name="candidate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="candidate_fullname" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="candidate_position" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="candidate_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserVoteTblCandidate">
+          <Key>
+            <PropertyRef Name="vote_id" />
+          </Key>
+          <Property Name="vote_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="candidate_id" Type="Int32" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="matricule" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vote_status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Historique_Saisie">
+          <Key>
+            <PropertyRef Name="historique_saisie_id" />
+          </Key>
+          <Property Name="historique_saisie_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="saisie_id" Type="Int32" />
+          <Property Name="amount_historique_saisie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="date_historique_saisie" Type="DateTime" Precision="3" />
+          <Property Name="executed_by" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Saisie" Relationship="CommitmentDBTestModel.FK__Historiqu__saisi__34B3CB38" FromRole="Historique_Saisie" ToRole="Saisie" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="operation_id" />
+          </Key>
+          <Property Name="operation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_operation_id" Type="Int32" />
+          <Property Name="operation_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="account_debit" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="account_credit" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TypeOperation" Relationship="CommitmentDBTestModel.FK__Operation__type___39788055" FromRole="Operation" ToRole="TypeOperation" />
+        </EntityType>
+        <EntityType Name="Saisie">
+          <Key>
+            <PropertyRef Name="saisie_id" />
+          </Key>
+          <Property Name="saisie_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="saisie_type_id" Type="Int32" />
+          <Property Name="amount_saisie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="account_no_saisie" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="status_saisie" Type="Int32" />
+          <Property Name="amount_found" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Historique_Saisie" Relationship="CommitmentDBTestModel.FK__Historiqu__saisi__34B3CB38" FromRole="Saisie" ToRole="Historique_Saisie" />
+          <NavigationProperty Name="SaisieType" Relationship="CommitmentDBTestModel.FK__Saisie__saisie_t__30E33A54" FromRole="Saisie" ToRole="SaisieType" />
+        </EntityType>
+        <EntityType Name="SaisieType">
+          <Key>
+            <PropertyRef Name="saisie_type_id" />
+          </Key>
+          <Property Name="saisie_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="saisie_label" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Saisies" Relationship="CommitmentDBTestModel.FK__Saisie__saisie_t__30E33A54" FromRole="SaisieType" ToRole="Saisie" />
+          <NavigationProperty Name="SaisieOperations" Relationship="CommitmentDBTestModel.FK__SaisieOpe__saisi__52442E1F" FromRole="SaisieType" ToRole="SaisieOperation" />
+        </EntityType>
+        <EntityType Name="TypeOperation">
+          <Key>
+            <PropertyRef Name="type_operation_id" />
+          </Key>
+          <Property Name="type_operation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="operation_label" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operations" Relationship="CommitmentDBTestModel.FK__Operation__type___39788055" FromRole="TypeOperation" ToRole="Operation" />
+        </EntityType>
+        <Association Name="FK__Historiqu__saisi__34B3CB38">
+          <End Type="CommitmentDBTestModel.Saisie" Role="Saisie" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Historique_Saisie" Role="Historique_Saisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saisie">
+              <PropertyRef Name="saisie_id" />
+            </Principal>
+            <Dependent Role="Historique_Saisie">
+              <PropertyRef Name="saisie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operation__type___39788055">
+          <End Type="CommitmentDBTestModel.TypeOperation" Role="TypeOperation" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Operation" Role="Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOperation">
+              <PropertyRef Name="type_operation_id" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="type_operation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Saisie__saisie_t__30E33A54">
+          <End Type="CommitmentDBTestModel.SaisieType" Role="SaisieType" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Saisie" Role="Saisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieType">
+              <PropertyRef Name="saisie_type_id" />
+            </Principal>
+            <Dependent Role="Saisie">
+              <PropertyRef Name="saisie_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="step_id" />
+          </Key>
+          <Property Name="step_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="step_label" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="step_no" Type="Int32" />
+          <Property Name="role_id" Type="Int32" />
+          <Property Name="isActive" Type="Int32" />
+          <NavigationProperty Name="Processes" Relationship="CommitmentDBTestModel.FK__Process__stepId__5BCD9859" FromRole="Step" ToRole="Process" />
+          <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.fk_step_role_id" FromRole="Step" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Workflow">
+          <Key>
+            <PropertyRef Name="case_id" />
+          </Key>
+          <Property Name="case_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="saisie_operation_header_id" Type="Int32" />
+          <Property Name="initiated_by" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Processes" Relationship="CommitmentDBTestModel.FK__Process__case_id__5EAA0504" FromRole="Workflow" ToRole="Process" />
+          <NavigationProperty Name="HistoriqueProcesses" Relationship="CommitmentDBTestModel.FK__Historiqu__case___664B26CC" FromRole="Workflow" ToRole="HistoriqueProcess" />
+        </EntityType>
+        <EntityType Name="Process">
+          <Key>
+            <PropertyRef Name="processId" />
+          </Key>
+          <Property Name="processId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="isCompleted" Type="Int32" />
+          <Property Name="initiated_by" Type="Int32" />
+          <Property Name="decision_id" Type="Int32" />
+          <Property Name="next_user_status" Type="Int32" />
+          <Property Name="case_id" Type="Int32" />
+          <Property Name="role_id" Type="Int32" />
+          <Property Name="seq_no" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="stepId" Type="Int32" />
+          <Property Name="reject_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="approve_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Step" Relationship="CommitmentDBTestModel.FK__Process__stepId__5BCD9859" FromRole="Process" ToRole="Step" />
+          <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.FK__Process__initiat__5CC1BC92" FromRole="Process" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="CommitmentDBTestModel.FK__Process__userId__5DB5E0CB" FromRole="Process" ToRole="UserProfile" />
+          <NavigationProperty Name="Workflow" Relationship="CommitmentDBTestModel.FK__Process__case_id__5EAA0504" FromRole="Process" ToRole="Workflow" />
+          <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.FK__Process__role_id__5AD97420" FromRole="Process" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Process__stepId__5BCD9859">
+          <End Type="CommitmentDBTestModel.Step" Role="Step" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Process" Role="Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Step">
+              <PropertyRef Name="step_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="stepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__initiat__5CC1BC92">
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Process" Role="Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="initiated_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__userId__5DB5E0CB">
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Process" Role="Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Process__case_id__5EAA0504">
+          <End Type="CommitmentDBTestModel.Workflow" Role="Workflow" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Process" Role="Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="case_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="case_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FetchParticipant_Result">
+          <Property Type="Int32" Name="step_id" Nullable="false" />
+          <Property Type="Int32" Name="role_id" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="HistoriqueProcess">
+          <Key>
+            <PropertyRef Name="historique_id" />
+          </Key>
+          <Property Name="historique_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="actions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="case_id" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="saisie_operation_header_id" Type="Int32" />
+          <NavigationProperty Name="Workflow" Relationship="CommitmentDBTestModel.FK__Historiqu__case___664B26CC" FromRole="HistoriqueProcess" ToRole="Workflow" />
+          <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.FK__Historiqu__userI__673F4B05" FromRole="HistoriqueProcess" ToRole="UserProfile" />
+          <NavigationProperty Name="SaisieOperationHeader" Relationship="CommitmentDBTestModel.fk_HistoriqueProcess_saisie_operation_header_id" FromRole="HistoriqueProcess" ToRole="SaisieOperationHeader" />
+        </EntityType>
+        <Association Name="FK__Historiqu__case___664B26CC">
+          <End Type="CommitmentDBTestModel.Workflow" Role="Workflow" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.HistoriqueProcess" Role="HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="case_id" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="case_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historiqu__userI__673F4B05">
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.HistoriqueProcess" Role="HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FetchPendingWorkFlowUpdate_Result">
+          <Property Type="Int32" Name="saisie_operation_header_id" Nullable="true" />
+          <Property Type="Int32" Name="case_id" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="idmenu" />
+          </Key>
+          <Property Name="idmenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iconType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iTrue" Type="Boolean" />
+          <Property Name="identity" Type="Int32" Nullable="false" />
+          <Property Name="rupture" Type="Boolean" />
+          <Property Name="rang" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="submenus" Relationship="CommitmentDBTestModel.FK__submenu__idmenu__6EE06CCD" FromRole="menu" ToRole="submenu" />
+        </EntityType>
+        <EntityType Name="role_submenu">
+          <Key>
+            <PropertyRef Name="idrole_menu" />
+          </Key>
+          <Property Name="idrole_menu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idroles" Type="Int32" Nullable="false" />
+          <Property Name="idsubmenu" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="submenu" Relationship="CommitmentDBTestModel.FK__role_subm__idsub__72B0FDB1" FromRole="role_submenu" ToRole="submenu" />
+          <NavigationProperty Name="Role" Relationship="CommitmentDBTestModel.FK__role_subm__idrol__71BCD978" FromRole="role_submenu" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="submenu">
+          <Key>
+            <PropertyRef Name="idsubmenu" />
+          </Key>
+          <Property Name="idsubmenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iconType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="identity" Type="Int32" Nullable="false" />
+          <Property Name="rupture" Type="Boolean" />
+          <Property Name="idmenu" Type="Int32" Nullable="false" />
+          <Property Name="rang" Type="Int32" Nullable="false" />
+          <Property Name="iTrue" Type="Boolean" />
+          <Property Name="ismenu" Type="Boolean" />
+          <NavigationProperty Name="menu" Relationship="CommitmentDBTestModel.FK__submenu__idmenu__6EE06CCD" FromRole="submenu" ToRole="menu" />
+          <NavigationProperty Name="role_submenu" Relationship="CommitmentDBTestModel.FK__role_subm__idsub__72B0FDB1" FromRole="submenu" ToRole="role_submenu" />
+        </EntityType>
+        <Association Name="FK__submenu__idmenu__6EE06CCD">
+          <End Type="CommitmentDBTestModel.menu" Role="menu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CommitmentDBTestModel.submenu" Role="submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="idmenu" />
+            </Principal>
+            <Dependent Role="submenu">
+              <PropertyRef Name="idmenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__role_subm__idsub__72B0FDB1">
+          <End Type="CommitmentDBTestModel.submenu" Role="submenu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CommitmentDBTestModel.role_submenu" Role="role_submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="submenu">
+              <PropertyRef Name="idsubmenu" />
+            </Principal>
+            <Dependent Role="role_submenu">
+              <PropertyRef Name="idsubmenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FetchRoleMenus_Result">
+          <Property Type="Int32" Name="idsubmenu" Nullable="false" />
+          <Property Type="String" Name="path" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="iconType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="icon" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="identity" Nullable="false" />
+          <Property Type="Boolean" Name="rupture" Nullable="true" />
+          <Property Type="Int32" Name="idmenu" Nullable="false" />
+          <Property Type="Int32" Name="rang" Nullable="false" />
+          <Property Type="Boolean" Name="iTrue" Nullable="true" />
+          <Property Type="Boolean" Name="ismenu" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FetchSubMenus_Result">
+          <Property Type="Int32" Name="idsubmenu" Nullable="false" />
+          <Property Type="String" Name="path" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="title_submenu" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="iconType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="icon" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="identity" Nullable="false" />
+          <Property Type="Boolean" Name="rupture" Nullable="true" />
+          <Property Type="String" Name="title_menu" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="rang" Nullable="false" />
+          <Property Type="Boolean" Name="iTrue" Nullable="true" />
+          <Property Type="Boolean" Name="ismenu" Nullable="true" />
+          <Property Type="Int32" Name="idmenu" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FetchMenu_Result">
+          <Property Type="Int32" Name="idmenu" Nullable="false" />
+          <Property Type="String" Name="path" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="iconType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="icon" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="iTrue" Nullable="true" />
+          <Property Type="Int32" Name="identity" Nullable="false" />
+          <Property Type="Boolean" Name="rupture" Nullable="true" />
+          <Property Type="Int32" Name="rang" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FetchSaisieType_Result">
+          <Property Type="Int32" Name="saisie_type_id" Nullable="false" />
+          <Property Type="String" Name="saisie_label" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FetchWorkflowStepStatus_Result">
+          <Property Type="Int32" Name="case_id" Nullable="false" />
+          <Property Type="String" Name="account_name" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="29" />
+          <Property Type="String" Name="step" Nullable="true" MaxLength="80" />
+          <Property Type="Int32" Name="initiated_by" Nullable="true" />
+          <Property Type="Int32" Name="saisie_operation_header_id" Nullable="true" />
+          </ComplexType>
+        <ComplexType Name="FetchReportByUser_Result">
+          <Property Type="Int32" Name="case_id" Nullable="true" />
+          <Property Type="String" Name="account_name" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="account_no" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="amount" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="step_label" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="23" />
+          <Property Type="DateTime" Name="initiated_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="treated_at" Nullable="true" Precision="23" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="saisie_operation_header_id" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="SaisieOperation">
+          <Key>
+            <PropertyRef Name="saisie_operation_id" />
+          </Key>
+          <Property Name="saisie_operation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="branch_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="account_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="account_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="operation_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount_debit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="amount_credit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="saisie_type_id" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="saisie_operation_header_id" Type="Int32" />
+          <NavigationProperty Name="SaisieOperationHeader" Relationship="CommitmentDBTestModel.constraint_fk_saisie_operation_header_id" FromRole="SaisieOperation" ToRole="SaisieOperationHeader" />
+          <NavigationProperty Name="SaisieType" Relationship="CommitmentDBTestModel.FK__SaisieOpe__saisi__52442E1F" FromRole="SaisieOperation" ToRole="SaisieType" />
+        </EntityType>
+        <EntityType Name="SaisieOperationHeader">
+          <Key>
+            <PropertyRef Name="saisie_operation_header_id" />
+          </Key>
+          <Property Name="saisie_operation_header_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="account_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="date_saisie" Type="DateTime" Precision="3" />
+          <Property Name="statut" Type="Int32" />
+          <Property Name="amount" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="saved_by" Type="Int32" />
+          <Property Name="document_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HistoriqueProcesses" Relationship="CommitmentDBTestModel.fk_HistoriqueProcess_saisie_operation_header_id" FromRole="SaisieOperationHeader" ToRole="HistoriqueProcess" />
+          <NavigationProperty Name="SaisieOperations" Relationship="CommitmentDBTestModel.constraint_fk_saisie_operation_header_id" FromRole="SaisieOperationHeader" ToRole="SaisieOperation" />
+          <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.fk_SaisieOperationHeader_saved_by" FromRole="SaisieOperationHeader" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="fk_HistoriqueProcess_saisie_operation_header_id">
+          <End Type="CommitmentDBTestModel.SaisieOperationHeader" Role="SaisieOperationHeader" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.HistoriqueProcess" Role="HistoriqueProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieOperationHeader">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Principal>
+            <Dependent Role="HistoriqueProcess">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="constraint_fk_saisie_operation_header_id">
+          <End Type="CommitmentDBTestModel.SaisieOperationHeader" Role="SaisieOperationHeader" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.SaisieOperation" Role="SaisieOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieOperationHeader">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Principal>
+            <Dependent Role="SaisieOperation">
+              <PropertyRef Name="saisie_operation_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SaisieOpe__saisi__52442E1F">
+          <End Type="CommitmentDBTestModel.SaisieType" Role="SaisieType" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.SaisieOperation" Role="SaisieOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaisieType">
+              <PropertyRef Name="saisie_type_id" />
+            </Principal>
+            <Dependent Role="SaisieOperation">
+              <PropertyRef Name="saisie_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SaisieOperationHeader_saved_by">
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.SaisieOperationHeader" Role="SaisieOperationHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="SaisieOperationHeader">
+              <PropertyRef Name="saved_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OtherCustomerSaisie">
+          <Key>
+            <PropertyRef Name="other_customer_saisie_id" />
+          </Key>
+          <Property Name="other_customer_saisie_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="creancier_saisissant" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="debiteur_saisie" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="montant_poursuivi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="numero_compte" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="search_by" Type="Int32" />
+          <NavigationProperty Name="UserProfile" Relationship="CommitmentDBTestModel.FK__OtherCust__searc__1E8F7FEF" FromRole="OtherCustomerSaisie" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK__OtherCust__searc__1E8F7FEF">
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.OtherCustomerSaisie" Role="OtherCustomerSaisie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="OtherCustomerSaisie">
+              <PropertyRef Name="search_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="Processes" Relationship="CommitmentDBTestModel.FK__Process__role_id__5AD97420" FromRole="Role" ToRole="Process" />
+          <NavigationProperty Name="role_submenu" Relationship="CommitmentDBTestModel.FK__role_subm__idrol__71BCD978" FromRole="Role" ToRole="role_submenu" />
+          <NavigationProperty Name="Steps" Relationship="CommitmentDBTestModel.fk_step_role_id" FromRole="Role" ToRole="Step" />
+          <NavigationProperty Name="UserProfiles" Relationship="CommitmentDBTestModel.fk_UserProfile_Roles" FromRole="Role" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK__Process__role_id__5AD97420">
+          <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Process" Role="Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Process">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__role_subm__idrol__71BCD978">
+          <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CommitmentDBTestModel.role_submenu" Role="role_submenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="role_submenu">
+              <PropertyRef Name="idroles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_step_role_id">
+          <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.Step" Role="Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserProfile_Roles">
+          <End Type="CommitmentDBTestModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="CommitmentDBTestModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -643,18 +1881,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="CommitmentDBTestModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="role_description" ColumnName="role_description" />
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="CommitmentDBTestModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
                 <ScalarProperty Name="phone_no" ColumnName="phone_no" />
                 <ScalarProperty Name="bra_code" ColumnName="bra_code" />
                 <ScalarProperty Name="responsable_email" ColumnName="responsable_email" />
@@ -702,6 +1932,351 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TblCandidates">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.TblCandidate">
+              <MappingFragment StoreEntitySet="TblCandidate">
+                <ScalarProperty Name="candidate_code" ColumnName="candidate_code" />
+                <ScalarProperty Name="candidate_position" ColumnName="candidate_position" />
+                <ScalarProperty Name="candidate_fullname" ColumnName="candidate_fullname" />
+                <ScalarProperty Name="candidate_id" ColumnName="candidate_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserVoteTblCandidates">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.UserVoteTblCandidate">
+              <MappingFragment StoreEntitySet="UserVoteTblCandidate">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="vote_status" ColumnName="vote_status" />
+                <ScalarProperty Name="matricule" ColumnName="matricule" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="candidate_id" ColumnName="candidate_id" />
+                <ScalarProperty Name="vote_id" ColumnName="vote_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historique_Saisie">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Historique_Saisie">
+              <MappingFragment StoreEntitySet="Historique_Saisie">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="executed_by" ColumnName="executed_by" />
+                <ScalarProperty Name="date_historique_saisie" ColumnName="date_historique_saisie" />
+                <ScalarProperty Name="amount_historique_saisie" ColumnName="amount_historique_saisie" />
+                <ScalarProperty Name="saisie_id" ColumnName="saisie_id" />
+                <ScalarProperty Name="historique_saisie_id" ColumnName="historique_saisie_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operations">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Operation">
+              <MappingFragment StoreEntitySet="Operation">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="account_credit" ColumnName="account_credit" />
+                <ScalarProperty Name="account_debit" ColumnName="account_debit" />
+                <ScalarProperty Name="operation_description" ColumnName="operation_description" />
+                <ScalarProperty Name="type_operation_id" ColumnName="type_operation_id" />
+                <ScalarProperty Name="operation_id" ColumnName="operation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Saisies">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Saisie">
+              <MappingFragment StoreEntitySet="Saisie">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="amount_found" ColumnName="amount_found" />
+                <ScalarProperty Name="status_saisie" ColumnName="status_saisie" />
+                <ScalarProperty Name="account_no_saisie" ColumnName="account_no_saisie" />
+                <ScalarProperty Name="amount_saisie" ColumnName="amount_saisie" />
+                <ScalarProperty Name="saisie_type_id" ColumnName="saisie_type_id" />
+                <ScalarProperty Name="saisie_id" ColumnName="saisie_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaisieTypes">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.SaisieType">
+              <MappingFragment StoreEntitySet="SaisieType">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="saisie_label" ColumnName="saisie_label" />
+                <ScalarProperty Name="saisie_type_id" ColumnName="saisie_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOperations">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.TypeOperation">
+              <MappingFragment StoreEntitySet="TypeOperation">
+                <ScalarProperty Name="operation_label" ColumnName="operation_label" />
+                <ScalarProperty Name="type_operation_id" ColumnName="type_operation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Steps">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Step">
+              <MappingFragment StoreEntitySet="Step">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="step_no" ColumnName="step_no" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="step_label" ColumnName="step_label" />
+                <ScalarProperty Name="step_id" ColumnName="step_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workflows">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Workflow">
+              <MappingFragment StoreEntitySet="Workflow">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="initiated_by" ColumnName="initiated_by" />
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Processes">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Process">
+              <MappingFragment StoreEntitySet="Process">
+                <ScalarProperty Name="approve_comment" ColumnName="approve_comment" />
+                <ScalarProperty Name="reject_comment" ColumnName="reject_comment" />
+                <ScalarProperty Name="stepId" ColumnName="stepId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="seq_no" ColumnName="seq_no" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+                <ScalarProperty Name="next_user_status" ColumnName="next_user_status" />
+                <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+                <ScalarProperty Name="initiated_by" ColumnName="initiated_by" />
+                <ScalarProperty Name="isCompleted" ColumnName="isCompleted" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="processId" ColumnName="processId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchParticipant" FunctionName="CommitmentDBTestModel.Store.FetchParticipant">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchParticipant_Result">
+                <ScalarProperty Name="step_id" ColumnName="step_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchPendingWorkflow" FunctionName="CommitmentDBTestModel.Store.FetchPendingWorkflow" >
+          </FunctionImportMapping>
+          <EntitySetMapping Name="HistoriqueProcesses">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.HistoriqueProcess">
+              <MappingFragment StoreEntitySet="HistoriqueProcess">
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="actions" ColumnName="actions" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="historique_id" ColumnName="historique_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchPendingWorkFlowUpdate" FunctionName="CommitmentDBTestModel.Store.FetchPendingWorkFlowUpdate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchPendingWorkFlowUpdate_Result">
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="menus">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.menu">
+              <MappingFragment StoreEntitySet="menu">
+                <ScalarProperty Name="rang" ColumnName="rang" />
+                <ScalarProperty Name="rupture" ColumnName="rupture" />
+                <ScalarProperty Name="identity" ColumnName="identity" />
+                <ScalarProperty Name="iTrue" ColumnName="iTrue" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="iconType" ColumnName="iconType" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="idmenu" ColumnName="idmenu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role_submenu">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.role_submenu">
+              <MappingFragment StoreEntitySet="role_submenu">
+                <ScalarProperty Name="idsubmenu" ColumnName="idsubmenu" />
+                <ScalarProperty Name="idroles" ColumnName="idroles" />
+                <ScalarProperty Name="idrole_menu" ColumnName="idrole_menu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="submenus">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.submenu">
+              <MappingFragment StoreEntitySet="submenu">
+                <ScalarProperty Name="ismenu" ColumnName="ismenu" />
+                <ScalarProperty Name="iTrue" ColumnName="iTrue" />
+                <ScalarProperty Name="rang" ColumnName="rang" />
+                <ScalarProperty Name="idmenu" ColumnName="idmenu" />
+                <ScalarProperty Name="rupture" ColumnName="rupture" />
+                <ScalarProperty Name="identity" ColumnName="identity" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="iconType" ColumnName="iconType" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="idsubmenu" ColumnName="idsubmenu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchRoleMenus" FunctionName="CommitmentDBTestModel.Store.FetchRoleMenus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchRoleMenus_Result">
+                <ScalarProperty Name="idsubmenu" ColumnName="idsubmenu" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="iconType" ColumnName="iconType" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="identity" ColumnName="identity" />
+                <ScalarProperty Name="rupture" ColumnName="rupture" />
+                <ScalarProperty Name="idmenu" ColumnName="idmenu" />
+                <ScalarProperty Name="rang" ColumnName="rang" />
+                <ScalarProperty Name="iTrue" ColumnName="iTrue" />
+                <ScalarProperty Name="ismenu" ColumnName="ismenu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchSubMenus" FunctionName="CommitmentDBTestModel.Store.FetchSubMenus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchSubMenus_Result">
+                <ScalarProperty Name="idsubmenu" ColumnName="idsubmenu" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="title_submenu" ColumnName="title_submenu" />
+                <ScalarProperty Name="iconType" ColumnName="iconType" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="identity" ColumnName="identity" />
+                <ScalarProperty Name="rupture" ColumnName="rupture" />
+                <ScalarProperty Name="title_menu" ColumnName="title_menu" />
+                <ScalarProperty Name="rang" ColumnName="rang" />
+                <ScalarProperty Name="iTrue" ColumnName="iTrue" />
+                <ScalarProperty Name="ismenu" ColumnName="ismenu" />
+                <ScalarProperty Name="idmenu" ColumnName="idmenu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchMenu" FunctionName="CommitmentDBTestModel.Store.FetchMenu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchMenu_Result">
+                <ScalarProperty Name="idmenu" ColumnName="idmenu" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="iconType" ColumnName="iconType" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="iTrue" ColumnName="iTrue" />
+                <ScalarProperty Name="identity" ColumnName="identity" />
+                <ScalarProperty Name="rupture" ColumnName="rupture" />
+                <ScalarProperty Name="rang" ColumnName="rang" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchSaisieType" FunctionName="CommitmentDBTestModel.Store.FetchSaisieType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchSaisieType_Result">
+                <ScalarProperty Name="saisie_type_id" ColumnName="saisie_type_id" />
+                <ScalarProperty Name="saisie_label" ColumnName="saisie_label" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchWorkflowStepStatus" FunctionName="CommitmentDBTestModel.Store.FetchWorkflowStepStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchWorkflowStepStatus_Result">
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="step" ColumnName="step" />
+                <ScalarProperty Name="initiated_by" ColumnName="initiated_by" />
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchRejectedWorkflow" FunctionName="CommitmentDBTestModel.Store.FetchRejectedWorkflow" />
+          <FunctionImportMapping FunctionImportName="FetchReportByUser" FunctionName="CommitmentDBTestModel.Store.FetchReportByUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommitmentDBTestModel.FetchReportByUser_Result">
+                <ScalarProperty Name="case_id" ColumnName="case_id" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="account_no" ColumnName="account_no" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="step_label" ColumnName="step_label" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="initiated_at" ColumnName="initiated_at" />
+                <ScalarProperty Name="treated_at" ColumnName="treated_at" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="SaisieOperations">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.SaisieOperation">
+              <MappingFragment StoreEntitySet="SaisieOperation">
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="saisie_type_id" ColumnName="saisie_type_id" />
+                <ScalarProperty Name="amount_credit" ColumnName="amount_credit" />
+                <ScalarProperty Name="amount_debit" ColumnName="amount_debit" />
+                <ScalarProperty Name="operation_description" ColumnName="operation_description" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="account_no" ColumnName="account_no" />
+                <ScalarProperty Name="branch_code" ColumnName="branch_code" />
+                <ScalarProperty Name="saisie_operation_id" ColumnName="saisie_operation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaisieOperationHeaders">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.SaisieOperationHeader">
+              <MappingFragment StoreEntitySet="SaisieOperationHeader">
+                <ScalarProperty Name="document_name" ColumnName="document_name" />
+                <ScalarProperty Name="saved_by" ColumnName="saved_by" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="date_saisie" ColumnName="date_saisie" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="account_no" ColumnName="account_no" />
+                <ScalarProperty Name="saisie_operation_header_id" ColumnName="saisie_operation_header_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtherCustomerSaisies">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.OtherCustomerSaisie">
+              <MappingFragment StoreEntitySet="OtherCustomerSaisie">
+                <ScalarProperty Name="search_by" ColumnName="search_by" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="numero_compte" ColumnName="numero_compte" />
+                <ScalarProperty Name="montant_poursuivi" ColumnName="montant_poursuivi" />
+                <ScalarProperty Name="debiteur_saisie" ColumnName="debiteur_saisie" />
+                <ScalarProperty Name="creancier_saisissant" ColumnName="creancier_saisissant" />
+                <ScalarProperty Name="other_customer_saisie_id" ColumnName="other_customer_saisie_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CommitmentDBTestModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="role_description" ColumnName="role_description" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -716,7 +2291,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />

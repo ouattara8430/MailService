@@ -20,6 +20,11 @@ namespace MailService
             this.GestionnaireReports = new HashSet<GestionnaireReport>();
             this.AlertRequestNews = new HashSet<AlertRequest>();
             this.AlertRequestNews1 = new HashSet<AlertRequest>();
+            this.Processes = new HashSet<Process>();
+            this.Processes1 = new HashSet<Process>();
+            this.HistoriqueProcesses = new HashSet<HistoriqueProcess>();
+            this.SaisieOperationHeaders = new HashSet<SaisieOperationHeader>();
+            this.OtherCustomerSaisies = new HashSet<OtherCustomerSaisie>();
         }
     
         public int userId { get; set; }
@@ -35,14 +40,25 @@ namespace MailService
         public string responsable_email { get; set; }
         public Nullable<int> bra_code { get; set; }
         public string phone_no { get; set; }
+        public Nullable<System.DateTime> LastLoginDate { get; set; }
     
         public virtual Branch Branch { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GestionnaireReport> GestionnaireReports { get; set; }
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlertRequest> AlertRequestNews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlertRequest> AlertRequestNews1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Process> Processes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Process> Processes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HistoriqueProcess> HistoriqueProcesses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SaisieOperationHeader> SaisieOperationHeaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OtherCustomerSaisie> OtherCustomerSaisies { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

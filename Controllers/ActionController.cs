@@ -124,13 +124,14 @@ namespace MailService.Controllers
                 request.next_action_date = request.due_date_action;
 
                 // set user id
-                request.userId = Int32.Parse(ConfigurationManager.AppSettings["userId"].ToString());
-                request.decision_id = Int32.Parse(ConfigurationManager.AppSettings["decisionId"].ToString());
-                request.executed_by = Int32.Parse(ConfigurationManager.AppSettings["executedBy"].ToString());
+                //request.userId = Int32.Parse(ConfigurationManager.AppSettings["userId"].ToString());
+                //request.decision_id = Int32.Parse(ConfigurationManager.AppSettings["decisionId"].ToString());
+                //request.executed_by = Int32.Parse(ConfigurationManager.AppSettings["executedBy"].ToString());
 
                 // save the object
                 db.AlertRequests.Add(request);
                 int save = db.SaveChanges();
+                //int save = 1;
                 if (save > 0)
                 {
                     // log the mail format
@@ -144,7 +145,16 @@ namespace MailService.Controllers
                     // get the account officer details
                     var acct_officer = db.UserProfiles.Where(x => x.userId == request.executed_by).FirstOrDefault();
 
-                    string mail = Mailer.SendEmail(acct_officer.email, "SUIVI ENGAGEMENT POUR LE PRET NO " + request.application_id, email_body, acct_officer.responsable_email, null);
+                    // get the customer name
+                    string customer_name = db.LoanApplications.Where(x => x.application_id == request.application_id).Select(c => c.customer_fullname).FirstOrDefault();
+
+                    // get the decision deciption
+                    string decision_desc = db.Decisions.Where(x => x.decision_id == request.decision_id).FirstOrDefault().decision_desc;
+
+                    //string mail = Mailer.SendEmail(acct_officer.email, "SUIVI ENGAGEMENT POUR LE CLIENT " + customer_name.ToUpper(), email_body, acct_officer.responsable_email, null);
+                    string mail = Mailer.SendEmail(acct_officer.email, decision_desc.ToUpper() + " POUR LE CLIENT " + customer_name.ToUpper(), email_body, acct_officer.responsable_email, null);
+
+                    //string mail = Mailer.SendEmail(acct_officer.email, "SUIVI ENGAGEMENT POUR LE PRET NO " + request.application_id, email_body, acct_officer.responsable_email, null);
 
                     if (mail != string.Empty)
                     {

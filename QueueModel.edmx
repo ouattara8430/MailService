@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QueueDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblDecision">
+          <Key>
+            <PropertyRef Name="decision_id" />
+          </Key>
+          <Property Name="decision_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="decision_label" Type="varchar" MaxLength="50" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TblRoles">
+          <Key>
+            <PropertyRef Name="tbl_role_id" />
+          </Key>
+          <Property Name="tbl_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tbl_role_label" Type="varchar" MaxLength="60" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TblService">
+          <Key>
+            <PropertyRef Name="tbl_service_id" />
+          </Key>
+          <Property Name="tbl_service_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_label" Type="varchar" MaxLength="200" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TblServiceType">
+          <Key>
+            <PropertyRef Name="service_type_id" />
+          </Key>
+          <Property Name="service_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_type_label" Type="varchar" MaxLength="200" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="service_id" Type="int" />
+        </EntityType>
+        <EntityType Name="TblStaff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="2500" />
+          <Property Name="role_id" Type="int" />
+          <Property Name="username" Type="varchar" MaxLength="60" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ticket_id" />
+          </Key>
+          <Property Name="ticket_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_type_id" Type="int" />
+          <Property Name="decision_id" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="served_at" Type="datetime" />
+          <Property Name="closed_at" Type="datetime" />
+          <Property Name="ticket_no" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="seq_no" Type="int" />
+          <Property Name="ticket_status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TicketAssignment">
+          <Key>
+            <PropertyRef Name="ticket_assignment_id" />
+          </Key>
+          <Property Name="ticket_assignment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ticket_id" Type="int" />
+          <Property Name="staff_id" Type="int" />
+          <Property Name="assigned_at" Type="datetime" />
+          <Property Name="completed_at" Type="datetime" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="TicketHistory">
+          <Key>
+            <PropertyRef Name="ticket_history_id" />
+          </Key>
+          <Property Name="ticket_history_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ticket_id" Type="int" />
+          <Property Name="decision_id" Type="int" />
+          <Property Name="changed_date" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__TblServic__servi__29572725">
+          <End Role="TblService" Type="Self.TblService" Multiplicity="0..1" />
+          <End Role="TblServiceType" Type="Self.TblServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblService">
+              <PropertyRef Name="tbl_service_id" />
+            </Principal>
+            <Dependent Role="TblServiceType">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__service___37A5467C">
+          <End Role="TblServiceType" Type="Self.TblServiceType" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblServiceType">
+              <PropertyRef Name="service_type_id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="service_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketAss__ticke__47DBAE45">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="TicketAssignment" Type="Self.TicketAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticket_id" />
+            </Principal>
+            <Dependent Role="TicketAssignment">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketHis__ticke__4CA06362">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="TicketHistory" Type="Self.TicketHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticket_id" />
+            </Principal>
+            <Dependent Role="TicketHistory">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_role_id">
+          <End Role="TblRoles" Type="Self.TblRoles" Multiplicity="0..1" />
+          <End Role="TblStaff" Type="Self.TblStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblRoles">
+              <PropertyRef Name="tbl_role_id" />
+            </Principal>
+            <Dependent Role="TblStaff">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="FetchAvailableStaff" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchListService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="service_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FetchListTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchServices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GenerateTicketNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TicketNumber" Type="varchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="QueueDBModelStoreContainer">
+          <EntitySet Name="TblDecision" EntityType="Self.TblDecision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblRoles" EntityType="Self.TblRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblService" EntityType="Self.TblService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblServiceType" EntityType="Self.TblServiceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStaff" EntityType="Self.TblStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketAssignment" EntityType="Self.TicketAssignment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketHistory" EntityType="Self.TicketHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TblServic__servi__29572725" Association="Self.FK__TblServic__servi__29572725">
+            <End Role="TblService" EntitySet="TblService" />
+            <End Role="TblServiceType" EntitySet="TblServiceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__service___37A5467C" Association="Self.FK__Ticket__service___37A5467C">
+            <End Role="TblServiceType" EntitySet="TblServiceType" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketAss__ticke__47DBAE45" Association="Self.FK__TicketAss__ticke__47DBAE45">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="TicketAssignment" EntitySet="TicketAssignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketHis__ticke__4CA06362" Association="Self.FK__TicketHis__ticke__4CA06362">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="TicketHistory" EntitySet="TicketHistory" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_role_id" Association="Self.fk_tbl_role_id">
+            <End Role="TblRoles" EntitySet="TblRoles" />
+            <End Role="TblStaff" EntitySet="TblStaff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QueueDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblService">
+          <Key>
+            <PropertyRef Name="tbl_service_id" />
+          </Key>
+          <Property Name="tbl_service_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_label" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TblServiceTypes" Relationship="Self.FK__TblServic__servi__29572725" FromRole="TblService" ToRole="TblServiceType" />
+        </EntityType>
+        <EntityType Name="TblServiceType">
+          <Key>
+            <PropertyRef Name="service_type_id" />
+          </Key>
+          <Property Name="service_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_type_label" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="service_id" Type="Int32" />
+          <NavigationProperty Name="TblService" Relationship="Self.FK__TblServic__servi__29572725" FromRole="TblServiceType" ToRole="TblService" />
+          <NavigationProperty Name="Tickets" Relationship="QueueDBModel.FK__Ticket__service___37A5467C" FromRole="TblServiceType" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="TicketHistory">
+          <Key>
+            <PropertyRef Name="ticket_history_id" />
+          </Key>
+          <Property Name="ticket_history_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ticket_id" Type="Int32" />
+          <Property Name="decision_id" Type="Int32" />
+          <Property Name="changed_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ticket" Relationship="QueueDBModel.FK__TicketHis__ticke__4CA06362" FromRole="TicketHistory" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK__TblServic__servi__29572725">
+          <End Role="TblService" Type="Self.TblService" Multiplicity="0..1" />
+          <End Role="TblServiceType" Type="Self.TblServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblService">
+              <PropertyRef Name="tbl_service_id" />
+            </Principal>
+            <Dependent Role="TblServiceType">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QueueDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblServices" EntityType="Self.TblService" />
+          <EntitySet Name="TblServiceTypes" EntityType="Self.TblServiceType" />
+          <EntitySet Name="TicketHistories" EntityType="Self.TicketHistory" />
+          <AssociationSet Name="FK__TblServic__servi__29572725" Association="Self.FK__TblServic__servi__29572725">
+            <End Role="TblService" EntitySet="TblServices" />
+            <End Role="TblServiceType" EntitySet="TblServiceTypes" />
+          </AssociationSet>
+          <EntitySet Name="TblRoles" EntityType="QueueDBModel.TblRole" />
+          <FunctionImport Name="FetchListService" ReturnType="Collection(QueueDBModel.FetchListService_Result)">
+          <Parameter Name="service_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Tickets" EntityType="QueueDBModel.Ticket" />
+          <EntitySet Name="TicketAssignments" EntityType="QueueDBModel.TicketAssignment" />
+          <AssociationSet Name="FK__Ticket__service___37A5467C" Association="QueueDBModel.FK__Ticket__service___37A5467C">
+            <End Role="TblServiceType" EntitySet="TblServiceTypes" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketAss__ticke__47DBAE45" Association="QueueDBModel.FK__TicketAss__ticke__47DBAE45">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="TicketAssignment" EntitySet="TicketAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketHis__ticke__4CA06362" Association="QueueDBModel.FK__TicketHis__ticke__4CA06362">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="TicketHistory" EntitySet="TicketHistories" />
+          </AssociationSet>
+          <FunctionImport Name="FetchAvailableStaff" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="FetchListTicket" ReturnType="Collection(QueueDBModel.FetchListTicket_Result)" />
+          <FunctionImport Name="GenerateTicketNo">
+          <Parameter Name="TicketNumber" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TblDecisions" EntityType="QueueDBModel.TblDecision" />
+          <EntitySet Name="TblStaffs" EntityType="QueueDBModel.TblStaff" />
+          <AssociationSet Name="fk_tbl_role_id" Association="QueueDBModel.fk_tbl_role_id">
+            <End Role="TblRole" EntitySet="TblRoles" />
+            <End Role="TblStaff" EntitySet="TblStaffs" />
+          </AssociationSet>
+          <FunctionImport Name="FetchServices" ReturnType="Collection(QueueDBModel.FetchServices_Result)" />
+        </EntityContainer>
+        <EntityType Name="TblRole">
+          <Key>
+            <PropertyRef Name="tbl_role_id" />
+          </Key>
+          <Property Name="tbl_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tbl_role_label" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TblStaffs" Relationship="QueueDBModel.fk_tbl_role_id" FromRole="TblRole" ToRole="TblStaff" />
+        </EntityType>
+        <ComplexType Name="FetchListService_Result">
+          <Property Type="Int32" Name="service_id" Nullable="false" />
+          <Property Type="String" Name="service_label" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="service_type_id" Nullable="false" />
+          <Property Type="String" Name="service_type_label" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="is_active" Nullable="true" />
+          <Property Type="DateTime" Name="created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ticket_id" />
+          </Key>
+          <Property Name="ticket_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_type_id" Type="Int32" />
+          <Property Name="decision_id" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="served_at" Type="DateTime" Precision="3" />
+          <Property Name="closed_at" Type="DateTime" Precision="3" />
+          <Property Name="ticket_no" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="seq_no" Type="Int32" />
+          <Property Name="ticket_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TblServiceType" Relationship="QueueDBModel.FK__Ticket__service___37A5467C" FromRole="Ticket" ToRole="TblServiceType" />
+          <NavigationProperty Name="TicketAssignments" Relationship="QueueDBModel.FK__TicketAss__ticke__47DBAE45" FromRole="Ticket" ToRole="TicketAssignment" />
+          <NavigationProperty Name="TicketHistories" Relationship="QueueDBModel.FK__TicketHis__ticke__4CA06362" FromRole="Ticket" ToRole="TicketHistory" />
+        </EntityType>
+        <EntityType Name="TicketAssignment">
+          <Key>
+            <PropertyRef Name="ticket_assignment_id" />
+          </Key>
+          <Property Name="ticket_assignment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ticket_id" Type="Int32" />
+          <Property Name="staff_id" Type="Int32" />
+          <Property Name="assigned_at" Type="DateTime" Precision="3" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="Ticket" Relationship="QueueDBModel.FK__TicketAss__ticke__47DBAE45" FromRole="TicketAssignment" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK__Ticket__service___37A5467C">
+          <End Type="QueueDBModel.TblServiceType" Role="TblServiceType" Multiplicity="0..1" />
+          <End Type="QueueDBModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblServiceType">
+              <PropertyRef Name="service_type_id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="service_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketAss__ticke__47DBAE45">
+          <End Type="QueueDBModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="QueueDBModel.TicketAssignment" Role="TicketAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticket_id" />
+            </Principal>
+            <Dependent Role="TicketAssignment">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketHis__ticke__4CA06362">
+          <End Type="QueueDBModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="QueueDBModel.TicketHistory" Role="TicketHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticket_id" />
+            </Principal>
+            <Dependent Role="TicketHistory">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FetchListTicket_Result">
+          <Property Type="Int32" Name="ticket_id" Nullable="false" />
+          <Property Type="String" Name="ticket_no" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ticket_status" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="staff_id" Nullable="true" />
+          <Property Type="String" Name="full_name" Nullable="true" MaxLength="2500" />
+        </ComplexType>
+        <EntityType Name="TblDecision">
+          <Key>
+            <PropertyRef Name="decision_id" />
+          </Key>
+          <Property Name="decision_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="decision_label" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TblStaff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" MaxLength="2500" FixedLength="false" Unicode="false" />
+          <Property Name="role_id" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TblRole" Relationship="QueueDBModel.fk_tbl_role_id" FromRole="TblStaff" ToRole="TblRole" />
+        </EntityType>
+        <Association Name="fk_tbl_role_id">
+          <End Type="QueueDBModel.TblRole" Role="TblRole" Multiplicity="0..1" />
+          <End Type="QueueDBModel.TblStaff" Role="TblStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblRole">
+              <PropertyRef Name="tbl_role_id" />
+            </Principal>
+            <Dependent Role="TblStaff">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FetchServices_Result">
+          <Property Type="Int32" Name="tbl_service_id" Nullable="false" />
+          <Property Type="String" Name="service_label" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="is_active" Nullable="true" />
+          <Property Type="DateTime" Name="created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QueueDBModelStoreContainer" CdmEntityContainer="QueueDBEntities">
+          <EntitySetMapping Name="TblServices">
+            <EntityTypeMapping TypeName="QueueDBModel.TblService">
+              <MappingFragment StoreEntitySet="TblService">
+                <ScalarProperty Name="tbl_service_id" ColumnName="tbl_service_id" />
+                <ScalarProperty Name="service_label" ColumnName="service_label" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblServiceTypes">
+            <EntityTypeMapping TypeName="QueueDBModel.TblServiceType">
+              <MappingFragment StoreEntitySet="TblServiceType">
+                <ScalarProperty Name="service_type_id" ColumnName="service_type_id" />
+                <ScalarProperty Name="service_type_label" ColumnName="service_type_label" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketHistories">
+            <EntityTypeMapping TypeName="QueueDBModel.TicketHistory">
+              <MappingFragment StoreEntitySet="TicketHistory">
+                <ScalarProperty Name="ticket_history_id" ColumnName="ticket_history_id" />
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+                <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+                <ScalarProperty Name="changed_date" ColumnName="changed_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblRoles">
+            <EntityTypeMapping TypeName="QueueDBModel.TblRole">
+              <MappingFragment StoreEntitySet="TblRoles">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="tbl_role_label" ColumnName="tbl_role_label" />
+                <ScalarProperty Name="tbl_role_id" ColumnName="tbl_role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchListService" FunctionName="QueueDBModel.Store.FetchListService">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QueueDBModel.FetchListService_Result">
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="service_label" ColumnName="service_label" />
+                <ScalarProperty Name="service_type_id" ColumnName="service_type_id" />
+                <ScalarProperty Name="service_type_label" ColumnName="service_type_label" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="QueueDBModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="ticket_status" ColumnName="ticket_status" />
+                <ScalarProperty Name="seq_no" ColumnName="seq_no" />
+                <ScalarProperty Name="ticket_no" ColumnName="ticket_no" />
+                <ScalarProperty Name="closed_at" ColumnName="closed_at" />
+                <ScalarProperty Name="served_at" ColumnName="served_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+                <ScalarProperty Name="service_type_id" ColumnName="service_type_id" />
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketAssignments">
+            <EntityTypeMapping TypeName="QueueDBModel.TicketAssignment">
+              <MappingFragment StoreEntitySet="TicketAssignment">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="assigned_at" ColumnName="assigned_at" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+                <ScalarProperty Name="ticket_assignment_id" ColumnName="ticket_assignment_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchAvailableStaff" FunctionName="QueueDBModel.Store.FetchAvailableStaff" />
+          <FunctionImportMapping FunctionImportName="FetchListTicket" FunctionName="QueueDBModel.Store.FetchListTicket">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QueueDBModel.FetchListTicket_Result">
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+                <ScalarProperty Name="ticket_no" ColumnName="ticket_no" />
+                <ScalarProperty Name="ticket_status" ColumnName="ticket_status" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GenerateTicketNo" FunctionName="QueueDBModel.Store.GenerateTicketNo" />
+          <EntitySetMapping Name="TblDecisions">
+            <EntityTypeMapping TypeName="QueueDBModel.TblDecision">
+              <MappingFragment StoreEntitySet="TblDecision">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="decision_label" ColumnName="decision_label" />
+                <ScalarProperty Name="decision_id" ColumnName="decision_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStaffs">
+            <EntityTypeMapping TypeName="QueueDBModel.TblStaff">
+              <MappingFragment StoreEntitySet="TblStaff">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchServices" FunctionName="QueueDBModel.Store.FetchServices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QueueDBModel.FetchServices_Result">
+                <ScalarProperty Name="tbl_service_id" ColumnName="tbl_service_id" />
+                <ScalarProperty Name="service_label" ColumnName="service_label" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

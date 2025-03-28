@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="024f0f4c038d40a79398e57cbb74cebc" Name="Diagram1">
+        <EntityTypeShape EntityType="QueueDBModel.TblService" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QueueDBModel.TblServiceType" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QueueDBModel.TicketHistory" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="QueueDBModel.FK__TblServic__servi__29572725" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QueueDBModel.TblRole" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="QueueDBModel.Ticket" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="QueueDBModel.TicketAssignment" Width="1.5" PointX="5.25" PointY="10" />
+        <AssociationConnector Association="QueueDBModel.FK__Ticket__service___37A5467C" />
+        <AssociationConnector Association="QueueDBModel.FK__TicketAss__ticke__47DBAE45" />
+        <AssociationConnector Association="QueueDBModel.FK__TicketHis__ticke__4CA06362" />
+        <EntityTypeShape EntityType="QueueDBModel.TblDecision" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="QueueDBModel.TblStaff" Width="1.5" PointX="3.375" PointY="16.5" />
+        <AssociationConnector Association="QueueDBModel.fk_tbl_role_id" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

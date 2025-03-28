@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace MailService
 {
@@ -9,6 +10,10 @@ namespace MailService
     {
         public static void Register(HttpConfiguration config)
         {
+            // Enable CORS for all origins, headers, and methods
+            var cors = new EnableCorsAttribute("*", "*", "*"); // Adjust as needed for production
+            config.EnableCors(cors);
+
             // Configuration et services API Web
 
             // Itinéraires de l'API Web

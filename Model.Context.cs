@@ -12,6 +12,8 @@ namespace MailService
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CommitmentDBTestEntities : DbContext
     {
@@ -30,8 +32,103 @@ namespace MailService
         public virtual DbSet<Financing> Financings { get; set; }
         public virtual DbSet<GestionnaireReport> GestionnaireReports { get; set; }
         public virtual DbSet<LoanApplication> LoanApplications { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<AlertRequest> AlertRequests { get; set; }
+        public virtual DbSet<TblCandidate> TblCandidates { get; set; }
+        public virtual DbSet<UserVoteTblCandidate> UserVoteTblCandidates { get; set; }
+        public virtual DbSet<Historique_Saisie> Historique_Saisie { get; set; }
+        public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<Saisie> Saisies { get; set; }
+        public virtual DbSet<SaisieType> SaisieTypes { get; set; }
+        public virtual DbSet<TypeOperation> TypeOperations { get; set; }
+        public virtual DbSet<Step> Steps { get; set; }
+        public virtual DbSet<Workflow> Workflows { get; set; }
+        public virtual DbSet<Process> Processes { get; set; }
+        public virtual DbSet<HistoriqueProcess> HistoriqueProcesses { get; set; }
+        public virtual DbSet<menu> menus { get; set; }
+        public virtual DbSet<role_submenu> role_submenu { get; set; }
+        public virtual DbSet<submenu> submenus { get; set; }
+        public virtual DbSet<SaisieOperation> SaisieOperations { get; set; }
+        public virtual DbSet<SaisieOperationHeader> SaisieOperationHeaders { get; set; }
+        public virtual DbSet<OtherCustomerSaisie> OtherCustomerSaisies { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+    
+        public virtual ObjectResult<FetchParticipant_Result> FetchParticipant(Nullable<bool> accountSaisie)
+        {
+            var accountSaisieParameter = accountSaisie.HasValue ?
+                new ObjectParameter("accountSaisie", accountSaisie) :
+                new ObjectParameter("accountSaisie", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchParticipant_Result>("FetchParticipant", accountSaisieParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> FetchPendingWorkflow(Nullable<int> role_id)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("FetchPendingWorkflow", role_idParameter);
+        }
+    
+        public virtual ObjectResult<FetchPendingWorkFlowUpdate_Result> FetchPendingWorkFlowUpdate(Nullable<int> role_id)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchPendingWorkFlowUpdate_Result>("FetchPendingWorkFlowUpdate", role_idParameter);
+        }
+    
+        public virtual ObjectResult<FetchRoleMenus_Result> FetchRoleMenus(Nullable<int> role_id)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchRoleMenus_Result>("FetchRoleMenus", role_idParameter);
+        }
+    
+        public virtual ObjectResult<FetchSubMenus_Result> FetchSubMenus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchSubMenus_Result>("FetchSubMenus");
+        }
+    
+        public virtual ObjectResult<FetchMenu_Result> FetchMenu()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchMenu_Result>("FetchMenu");
+        }
+    
+        public virtual ObjectResult<FetchSaisieType_Result> FetchSaisieType()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchSaisieType_Result>("FetchSaisieType");
+        }
+    
+        public virtual ObjectResult<FetchWorkflowStepStatus_Result> FetchWorkflowStepStatus(Nullable<int> saisie_operation_header_id)
+        {
+            var saisie_operation_header_idParameter = saisie_operation_header_id.HasValue ?
+                new ObjectParameter("saisie_operation_header_id", saisie_operation_header_id) :
+                new ObjectParameter("saisie_operation_header_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchWorkflowStepStatus_Result>("FetchWorkflowStepStatus", saisie_operation_header_idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> FetchRejectedWorkflow(Nullable<int> user_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("FetchRejectedWorkflow", user_idParameter);
+        }
+    
+        public virtual ObjectResult<FetchReportByUser_Result> FetchReportByUser(Nullable<int> user_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchReportByUser_Result>("FetchReportByUser", user_idParameter);
+        }
     }
 }
